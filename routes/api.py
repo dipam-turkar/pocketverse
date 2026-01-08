@@ -114,10 +114,16 @@ def list_pocketshows():
 @api_bp.route('/pocketshows/<int:pocketshow_id>/posts', methods=['POST'])
 def create_post(pocketshow_id):
     """API endpoint to create a post in a pocketshow"""
+    print(f"[API] POST /pocketshows/{pocketshow_id}/posts - Creating post...")
+    
     pocketshow = Pocketshow.query.get_or_404(pocketshow_id)
+    print(f"[API] Pocketshow: {pocketshow.name}")
+    
     data = request.get_json()
+    print(f"[API] Request data: {list(data.keys()) if data else 'None'}")
     
     if not data or not data.get('title'):
+        print(f"[API] ❌ Missing title")
         return jsonify({'error': 'Title is required'}), 400
     
     title = data['title'].strip()

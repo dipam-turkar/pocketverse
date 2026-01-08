@@ -1,7 +1,11 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, session
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, session, current_app, send_from_directory
 from extensions import db
 from models import Pocketshow, Post, Comment, User, Vote
 from functools import wraps
+import os
+from werkzeug.utils import secure_filename
+import base64
+from datetime import datetime
 
 main_bp = Blueprint('main', __name__)
 
@@ -217,28 +221,42 @@ def vote_comment(comment_id):
 @main_bp.route('/login', methods=['GET', 'POST'])
 def login():
     """Login page for users"""
+    print(f"[LOGIN] Request method: {request.method}")
+    
     if request.method == 'POST':
         username = request.form.get('username', '').strip()
         password = request.form.get('password', '')
         
+        print(f"[LOGIN] Attempting login for: {username}")
+        
         if not username or not password:
+            print(f"[LOGIN] ❌ Missing username or password")
             flash('Username and password are required', 'error')
             return render_template('login.html')
         
         user = User.query.filter_by(username=username).first()
         
-        if user and user.check_password(password):
-            session['user_id'] = user.id
-            session['username'] = user.username
-            session['is_official'] = user.is_official
-            flash(f'Welcome back, {user.display_name}!', 'success')
-            
-            if user.is_official:
-                return redirect(url_for('main.dashboard'))
+        if user:
+            print(f"[LOGIN] User found: ID {user.id}, checking password...")
+            if user.check_password(password):
+                print(f"[LOGIN] ✅ Password correct - logging in user {user.id}")
+                session['user_id'] = user.id
+                session['username'] = user.username
+                session['is_official'] = user.is_official
+                flash(f'Welcome back, {user.display_name}!', 'success')
+                
+                if user.is_official:
+                    print(f"[LOGIN] Redirecting official user to dashboard")
+                    return redirect(url_for('main.dashboard'))
+                else:
+                    print(f"[LOGIN] Redirecting regular user to index")
+                    return redirect(url_for('main.index'))
             else:
-                return redirect(url_for('main.index'))
+                print(f"[LOGIN] ❌ Invalid password")
         else:
-            flash('Invalid username or password', 'error')
+            print(f"[LOGIN] ❌ User not found: {username}")
+        
+        flash('Invalid username or password', 'error')
     
     return render_template('login.html')
 
@@ -337,8 +355,28 @@ def create_post_dashboard():
     title = request.form.get('title', '').strip()
     content = request.form.get('content', '').strip()
     description = request.form.get('description', '').strip()
+    # Get image URL from hidden field (set by JavaScript after verification)
     image_url = request.form.get('image_url', '').strip() or None
     video_url = request.form.get('video_url', '').strip() or None
+    
+    # Clear any pending image session data
+    # Also clean up any temporary image files
+    temp_filename = session.get('pending_image_filename')
+    if temp_filename:
+        try:
+            upload_folder = current_app.config['UPLOAD_FOLDER']
+            temp_filepath = os.path.join(upload_folder, temp_filename)
+            if os.path.exists(temp_filepath):
+                print(f"[POST CREATE] Cleaning up temp file: {temp_filename}")
+                os.remove(temp_filepath)
+        except Exception as e:
+            print(f"[POST CREATE] Warning: Could not delete temp file: {str(e)}")
+    
+    session.pop('pending_image', None)
+    session.pop('pending_image_filename', None)
+    session.pop('pending_image_url', None)
+    session.pop('pending_image_type', None)
+    session.pop('pending_image_prompt', None)
     
     if not pocketshow_id or not title:
         flash('Pocketshow and title are required', 'error')
@@ -410,4 +448,299 @@ def create_comment_dashboard():
     except Exception as e:
         flash(f'Error creating comment: {str(e)}', 'error')
         return redirect(url_for('main.dashboard'))
+
+
+# ==================== IMAGE HANDLING ROUTES ====================
+
+def allowed_file(filename):
+    """Check if file extension is allowed"""
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
+
+
+@main_bp.route('/dashboard/generate_image', methods=['POST'])
+@official_user_required
+def generate_image():
+    """Generate an image using AI based on prompt and story context"""
+    print(f"[IMAGE GEN] Starting image generation...")
+    
+    from services.image_generator import ImageGenerator
+    
+    user_id = session['user_id']
+    user = User.query.get(user_id)
+    
+    print(f"[IMAGE GEN] User: {user_id} ({user.username if user else 'unknown'})")
+    
+    prompt = request.form.get('prompt', '').strip()
+    custom_prompt = request.form.get('custom_prompt', '').strip()
+    
+    print(f"[IMAGE GEN] Base prompt: {prompt[:50] if prompt else 'None'}")
+    print(f"[IMAGE GEN] Custom prompt: {custom_prompt[:50] if custom_prompt else 'None'}")
+    
+    if not prompt and not custom_prompt:
+        print(f"[IMAGE GEN] ❌ No prompt provided")
+        return jsonify({'success': False, 'error': 'Prompt is required'}), 400
+    
+    # Use custom prompt if provided, otherwise use the base prompt
+    final_prompt = custom_prompt if custom_prompt else prompt
+    
+    # Build story context from user's character data
+    story_context = {}
+    if user.is_official:
+        char_data = user.get_character_data()
+        if char_data:
+            story_context = {
+                'show_name': char_data.get('show_name'),
+                'character_details': {
+                    'name': char_data.get('character_name'),
+                    'bio': char_data.get('bio'),
+                    'personality': char_data.get('personality')
+                }
+            }
+    
+    # Get additional context from form
+    plot_points = request.form.get('plot_points', '').strip()
+    subplots = request.form.get('subplots', '').strip()
+    cliffhangers = request.form.get('cliffhangers', '').strip()
+    
+    if plot_points:
+        story_context['plot_points'] = [p.strip() for p in plot_points.split(',') if p.strip()]
+    if subplots:
+        story_context['subplots'] = [s.strip() for s in subplots.split(',') if s.strip()]
+    if cliffhangers:
+        story_context['cliffhangers'] = [c.strip() for c in cliffhangers.split(',') if c.strip()]
+    
+    # Generate image
+    # Get provider from config or use default (nanobanana)
+    provider = current_app.config.get('DEFAULT_IMAGE_PROVIDER', 'nanobanana')
+    print(f"[IMAGE GEN] Using provider: {provider}")
+    
+    # Hardcode PromoCanon directory
+    import os
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    canon_directory = os.path.join(project_root, 'PromoCanon_Show_33adb096b04ecd6b23ce9341160b199f2d489311_1_100')
+    print(f"[IMAGE GEN] Using PromoCanon directory: {canon_directory}")
+    
+    generator = ImageGenerator(provider=provider, canon_directory=canon_directory)
+    result = generator.generate_image(final_prompt, story_context)
+    
+    if result['success']:
+        # Save image to disk immediately to avoid storing large data in session
+        image_base64 = result.get('image_base64')
+        if image_base64:
+            try:
+                print(f"[IMAGE GEN] Saving generated image to disk...")
+                # Decode base64 image
+                image_data = base64.b64decode(image_base64)
+                image_size = len(image_data)
+                print(f"[IMAGE GEN] Decoded image size: {image_size} bytes")
+                
+                # Create temporary filename with user ID and timestamp
+                timestamp = datetime.now().strftime('%Y%m%d_%H%M%S_%f')
+                temp_filename = f"temp_gen_{user_id}_{timestamp}.png"
+                
+                upload_folder = current_app.config['UPLOAD_FOLDER']
+                filepath = os.path.join(upload_folder, temp_filename)
+                
+                # Save to disk
+                with open(filepath, 'wb') as f:
+                    f.write(image_data)
+                
+                print(f"[IMAGE GEN] ✅ Image saved to: {temp_filename}")
+                
+                # Store only the filename in session (not the base64 data)
+                session['pending_image_filename'] = temp_filename
+                session['pending_image_type'] = 'generated'
+                session['pending_image_prompt'] = final_prompt
+                
+                # Return image URL for preview (serve from disk)
+                image_url = url_for('main.uploaded_file', filename=temp_filename)
+                
+                return jsonify({
+                    'success': True,
+                    'image_url': image_url,  # Return URL instead of base64
+                    'prompt': final_prompt
+                })
+            except Exception as e:
+                print(f"[IMAGE GEN] ❌ Error saving image to disk: {str(e)}")
+                import traceback
+                traceback.print_exc()
+                return jsonify({
+                    'success': False,
+                    'error': f'Error saving image: {str(e)}'
+                }), 500
+        else:
+            print(f"[IMAGE GEN] ❌ No image_base64 in result")
+            return jsonify({
+                'success': False,
+                'error': 'No image data received from generator'
+            }), 400
+    else:
+        return jsonify({
+            'success': False,
+            'error': result.get('error', 'Failed to generate image')
+        }), 400
+
+
+@main_bp.route('/dashboard/upload_image', methods=['POST'])
+@official_user_required
+def upload_image():
+    """Handle image file upload"""
+    if 'image' not in request.files:
+        return jsonify({'success': False, 'error': 'No file provided'}), 400
+    
+    file = request.files['image']
+    
+    if file.filename == '':
+        return jsonify({'success': False, 'error': 'No file selected'}), 400
+    
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        # Add timestamp to avoid conflicts
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = f"{timestamp}_{filename}"
+        
+        upload_folder = current_app.config['UPLOAD_FOLDER']
+        filepath = os.path.join(upload_folder, filename)
+        file.save(filepath)
+        
+        # Store in session for verification
+        image_url = url_for('main.uploaded_file', filename=filename)
+        session['pending_image_url'] = image_url
+        session['pending_image_type'] = 'uploaded'
+        
+        return jsonify({
+            'success': True,
+            'image_url': image_url,
+            'filename': filename
+        })
+    else:
+        return jsonify({'success': False, 'error': 'Invalid file type'}), 400
+
+
+@main_bp.route('/dashboard/reject_image', methods=['POST'])
+@official_user_required
+def reject_image():
+    """Clean up rejected image file"""
+    print(f"[IMAGE REJECT] Cleaning up rejected image...")
+    
+    temp_filename = session.get('pending_image_filename')
+    if temp_filename:
+        try:
+            upload_folder = current_app.config['UPLOAD_FOLDER']
+            temp_filepath = os.path.join(upload_folder, temp_filename)
+            if os.path.exists(temp_filepath):
+                print(f"[IMAGE REJECT] Deleting temp file: {temp_filename}")
+                os.remove(temp_filepath)
+        except Exception as e:
+            print(f"[IMAGE REJECT] Warning: Could not delete temp file: {str(e)}")
+    
+    # Clear session
+    session.pop('pending_image', None)
+    session.pop('pending_image_filename', None)
+    session.pop('pending_image_type', None)
+    session.pop('pending_image_prompt', None)
+    
+    return jsonify({'success': True})
+
+
+@main_bp.route('/uploads/<filename>')
+def uploaded_file(filename):
+    """Serve uploaded files"""
+    print(f"[UPLOAD SERVE] Request for file: {filename}")
+    upload_folder = current_app.config['UPLOAD_FOLDER']
+    filepath = os.path.join(upload_folder, filename)
+    
+    print(f"[UPLOAD SERVE] Full path: {filepath}")
+    print(f"[UPLOAD SERVE] File exists: {os.path.exists(filepath)}")
+    
+    if not os.path.exists(filepath):
+        print(f"[UPLOAD SERVE] ❌ File not found: {filepath}")
+        from flask import abort
+        abort(404)
+    
+    print(f"[UPLOAD SERVE] ✅ Serving file: {filename}")
+    # Use send_from_directory with proper MIME type
+    return send_from_directory(
+        upload_folder, 
+        filename,
+        mimetype='image/png' if filename.lower().endswith('.png') else 
+                 'image/jpeg' if filename.lower().endswith(('.jpg', '.jpeg')) else
+                 'image/gif' if filename.lower().endswith('.gif') else
+                 'image/webp' if filename.lower().endswith('.webp') else None
+    )
+
+
+@main_bp.route('/dashboard/save_image', methods=['POST'])
+@official_user_required
+def save_image():
+    """Save the verified image and return URL (image already saved, just rename if needed)"""
+    print(f"[IMAGE SAVE] Starting image save...")
+    
+    image_type = session.get('pending_image_type', 'generated')
+    print(f"[IMAGE SAVE] Image type: {image_type}")
+    
+    if image_type == 'generated':
+        print(f"[IMAGE SAVE] Processing generated image...")
+        temp_filename = session.get('pending_image_filename')
+        if not temp_filename:
+            print(f"[IMAGE SAVE] ❌ No pending_image_filename in session")
+            return jsonify({'success': False, 'error': 'No image to save'}), 400
+        
+        try:
+            upload_folder = current_app.config['UPLOAD_FOLDER']
+            temp_filepath = os.path.join(upload_folder, temp_filename)
+            
+            # Check if temp file exists
+            if not os.path.exists(temp_filepath):
+                print(f"[IMAGE SAVE] ❌ Temp file not found: {temp_filename}")
+                return jsonify({'success': False, 'error': 'Temporary image file not found'}), 400
+            
+            # Rename from temp to permanent filename
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            permanent_filename = f"generated_{timestamp}.png"
+            permanent_filepath = os.path.join(upload_folder, permanent_filename)
+            
+            print(f"[IMAGE SAVE] Renaming from {temp_filename} to {permanent_filename}")
+            os.rename(temp_filepath, permanent_filepath)
+            
+            file_size = os.path.getsize(permanent_filepath)
+            print(f"[IMAGE SAVE] ✅ File saved - Size: {file_size} bytes")
+            
+            image_url = url_for('main.uploaded_file', filename=permanent_filename)
+            
+            # Clear session
+            session.pop('pending_image_filename', None)
+            session.pop('pending_image_type', None)
+            session.pop('pending_image_prompt', None)
+            
+            print(f"[IMAGE SAVE] ✅ Image URL: {image_url}")
+            
+            return jsonify({
+                'success': True,
+                'image_url': image_url
+            })
+        except Exception as e:
+            print(f"[IMAGE SAVE] ❌ Error: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            return jsonify({'success': False, 'error': str(e)}), 400
+    
+    elif image_type == 'uploaded':
+        print(f"[IMAGE SAVE] Processing uploaded image...")
+        image_url = session.get('pending_image_url')
+        if image_url:
+            print(f"[IMAGE SAVE] ✅ Image URL: {image_url}")
+            session.pop('pending_image_url', None)
+            session.pop('pending_image_type', None)
+            return jsonify({
+                'success': True,
+                'image_url': image_url
+            })
+        else:
+            print(f"[IMAGE SAVE] ❌ No image_url in session")
+            return jsonify({'success': False, 'error': 'No image URL found'}), 400
+    
+    print(f"[IMAGE SAVE] ❌ Invalid image type: {image_type}")
+    return jsonify({'success': False, 'error': 'Invalid image type'}), 400
 

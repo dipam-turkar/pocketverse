@@ -211,6 +211,10 @@ __marimo__/
 *.sqlite
 *.sqlite3
 
+# Logs
+*.log
+pocketverse.log
+
 # IDE
 .vscode/
 .idea/
@@ -228,3 +232,4 @@ Thumbs.db
 
 # Credentials
 creds.py
+static/uploads

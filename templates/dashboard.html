@@ -51,9 +51,65 @@
                     <textarea id="content" name="content" rows="6" placeholder="Post content"></textarea>
                 </div>
 
+                <!-- Image Section -->
                 <div class="form-group">
-                    <label for="image_url">Image URL</label>
-                    <input type="url" id="image_url" name="image_url" placeholder="https://example.com/image.jpg">
+                    <label>Image</label>
+                    <div class="image-options">
+                        <div class="image-option-tabs">
+                            <button type="button" class="img-tab-btn active" onclick="showImageTab('upload')">Upload Image</button>
+                            <button type="button" class="img-tab-btn" onclick="showImageTab('generate')">Generate Image</button>
+                        </div>
+
+                        <!-- Upload Tab -->
+                        <div id="image-upload-tab" class="image-tab-content active">
+                            <input type="file" id="image_file" name="image" accept="image/*" onchange="handleImageUpload(event)">
+                            <div id="upload-preview" class="image-preview" style="display: none;">
+                                <img id="upload-preview-img" src="" alt="Preview">
+                                <button type="button" class="btn btn-secondary" onclick="clearImagePreview()">Remove</button>
+                            </div>
+                        </div>
+
+                        <!-- Generate Tab -->
+                        <div id="image-generate-tab" class="image-tab-content">
+                            <div class="form-group">
+                                <label for="image_prompt">Image Prompt *</label>
+                                <textarea id="image_prompt" name="image_prompt" rows="3" placeholder="Describe the image you want to generate..."></textarea>
+                                <small>This will be enhanced with your character's story context</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="custom_prompt">Custom Prompt (Optional)</label>
+                                <textarea id="custom_prompt" name="custom_prompt" rows="2" placeholder="Override the prompt completely if needed"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="plot_points">Plot Points (Optional)</label>
+                                <input type="text" id="plot_points" name="plot_points" placeholder="Comma-separated plot points">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subplots">Subplots (Optional)</label>
+                                <input type="text" id="subplots" name="subplots" placeholder="Comma-separated subplots">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cliffhangers">Cliffhangers (Optional)</label>
+                                <input type="text" id="cliffhangers" name="cliffhangers" placeholder="Comma-separated cliffhangers">
+                            </div>
+
+                            <button type="button" class="btn btn-secondary" onclick="generateImage()">Generate Image</button>
+                            
+                            <div id="generate-status" style="display: none; margin-top: 1rem;"></div>
+                            <div id="generate-preview" class="image-preview" style="display: none;">
+                                <img id="generate-preview-img" src="" alt="Generated Preview">
+                                <div class="preview-actions">
+                                    <button type="button" class="btn btn-primary" onclick="acceptImage()">Accept & Use</button>
+                                    <button type="button" class="btn btn-secondary" onclick="rejectImage()">Reject & Regenerate</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="final_image_url" name="image_url">
                 </div>
 
                 <div class="form-group">
@@ -151,6 +207,148 @@ function showTab(tabName) {
     
     // Add active class to clicked button
     event.target.classList.add('active');
+}
+
+function showImageTab(tabName) {
+    // Hide all image tabs
+    document.querySelectorAll('.image-tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Remove active class from all image tab buttons
+    document.querySelectorAll('.img-tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Show selected tab
+    if (tabName === 'upload') {
+        document.getElementById('image-upload-tab').classList.add('active');
+    } else {
+        document.getElementById('image-generate-tab').classList.add('active');
+    }
+    
+    // Add active class to clicked button
+    event.target.classList.add('active');
+}
+
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    fetch('/dashboard/upload_image', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const preview = document.getElementById('upload-preview');
+            const previewImg = document.getElementById('upload-preview-img');
+            previewImg.src = data.image_url;
+            preview.style.display = 'block';
+            document.getElementById('final_image_url').value = data.image_url;
+        } else {
+            alert('Error uploading image: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to upload image');
+    });
+}
+
+function clearImagePreview() {
+    document.getElementById('upload-preview').style.display = 'none';
+    document.getElementById('image_file').value = '';
+    document.getElementById('final_image_url').value = '';
+}
+
+function generateImage() {
+    const prompt = document.getElementById('image_prompt').value.trim();
+    const customPrompt = document.getElementById('custom_prompt').value.trim();
+    
+    if (!prompt && !customPrompt) {
+        alert('Please enter an image prompt');
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('prompt', prompt);
+    if (customPrompt) {
+        formData.append('custom_prompt', customPrompt);
+    }
+    
+    const plotPoints = document.getElementById('plot_points').value.trim();
+    const subplots = document.getElementById('subplots').value.trim();
+    const cliffhangers = document.getElementById('cliffhangers').value.trim();
+    
+    if (plotPoints) formData.append('plot_points', plotPoints);
+    if (subplots) formData.append('subplots', subplots);
+    if (cliffhangers) formData.append('cliffhangers', cliffhangers);
+    
+    const statusDiv = document.getElementById('generate-status');
+    statusDiv.style.display = 'block';
+    statusDiv.innerHTML = '<p>Generating image... This may take a moment.</p>';
+    
+    fetch('/dashboard/generate_image', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        statusDiv.style.display = 'none';
+        
+        if (data.success) {
+            const preview = document.getElementById('generate-preview');
+            const previewImg = document.getElementById('generate-preview-img');
+            previewImg.src = data.image_url;
+            preview.style.display = 'block';
+        } else {
+            statusDiv.innerHTML = '<p style="color: red;">Error: ' + data.error + '</p>';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        statusDiv.innerHTML = '<p style="color: red;">Failed to generate image</p>';
+    });
+}
+
+function acceptImage() {
+    // Save the generated image
+    fetch('/dashboard/save_image', {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('final_image_url').value = data.image_url;
+            alert('Image accepted! You can now create your post.');
+        } else {
+            alert('Error saving image: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to save image');
+    });
+}
+
+function rejectImage() {
+    // Clean up rejected image on server
+    fetch('/dashboard/reject_image', {
+        method: 'POST'
+    })
+    .catch(error => {
+        console.error('Error cleaning up rejected image:', error);
+    });
+    
+    document.getElementById('generate-preview').style.display = 'none';
+    document.getElementById('image_prompt').value = '';
+    document.getElementById('custom_prompt').value = '';
+    document.getElementById('final_image_url').value = '';
 }
 </script>
 {% endblock %}

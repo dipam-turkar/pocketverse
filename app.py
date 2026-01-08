@@ -11,6 +11,12 @@ def create_app(config_class=Config):
     if not app.config.get('SECRET_KEY'):
         app.config['SECRET_KEY'] = 'dev-secret-key-change-in-production'
     
+    # Ensure upload folder exists
+    import os
+    upload_folder = app.config.get('UPLOAD_FOLDER')
+    if upload_folder and not os.path.exists(upload_folder):
+        os.makedirs(upload_folder)
+    
     # Initialize extensions with app
     db.init_app(app)
     

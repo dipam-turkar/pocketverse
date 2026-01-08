@@ -53,7 +53,12 @@
 
     {% if post.image_url %}
         <div class="post-media">
-            <img src="{{ post.image_url }}" alt="Post image" class="post-image">
+            {% set img_url = post.image_url %}
+            {% if img_url.startswith('/uploads/') or img_url.startswith('http') %}
+                <img src="{{ post.image_url }}" alt="Post image" class="post-image" onerror="console.error('Image failed to load:', this.src); this.style.display='none';">
+            {% else %}
+                <p style="color: orange;">Invalid image URL format: {{ post.image_url }}</p>
+            {% endif %}
         </div>
     {% endif %}
 

@@ -231,6 +231,21 @@ Key configuration options in `config.py`:
 - `SECRET_KEY`: Flask secret key (change in production!)
 - `SQLALCHEMY_DATABASE_URI`: Database connection string
 - `SQLALCHEMY_TRACK_MODIFICATIONS`: SQLAlchemy configuration
+- `DEFAULT_IMAGE_PROVIDER`: Image generation provider (default: 'nanobanana')
+
+### Image Generation API Keys (Optional)
+
+Set these environment variables if you want to use API keys (free tiers available):
+
+```bash
+export NANOBANANA_API_KEY="your_key_here"  # Optional - free tier available
+export VEO_API_KEY="your_key_here"         # Optional - for Google Veo
+export HUGGINGFACE_API_KEY="your_key_here" # Optional - for Hugging Face
+export REPLICATE_API_TOKEN="your_token"    # Optional - for Replicate
+export IMAGE_PROVIDER="nanobanana"         # Set default provider
+```
+
+**Note**: Nano Banana and other providers have free tiers that work without API keys, but using an API key may provide better rate limits and reliability.
 
 ## License
 
