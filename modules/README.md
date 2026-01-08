@@ -10,6 +10,16 @@ Module for creating posts by official users.
 ### `official_comment_creator.py`
 Module for creating comments by official users.
 
+### Post Generation Engine (VEO Prompts)
+
+A modular system for generating VEO (video generation) prompts from PromoCanon cliffhangers:
+
+- **`promo_canon_parser.py`**: Parses PromoCanon markdown files (cliffhangers, characters, episodes)
+- **`scene_extractor.py`**: Extracts engaging visual scenes from cliffhangers
+- **`veo_prompt_generator.py`**: Generates structured VEO prompts with scene, characters, descriptions
+- **`post_generation_engine.py`**: Main orchestration engine
+- **`example_prompt_generation.py`**: Usage examples
+
 ## Usage Examples
 
 ### Creating Posts
@@ -229,6 +239,71 @@ except requests.RequestException as e:
     print(f"API error: {e}")
 ```
 
+## Post Generation Engine Usage
+
+### Basic Usage
+
+```python
+from modules.post_generation_engine import create_engine
+
+# Initialize engine with PromoCanon directory
+canon_dir = "PromoCanon_Show_33adb096b04ecd6b23ce9341160b199f2d489311_1_100"
+engine = create_engine(canon_dir)
+
+# Generate prompts for a specific episode
+prompts = engine.generate_prompts_for_cliffhanger(episode_num=7)
+
+for prompt in prompts:
+    print(f"VEO Prompt: {prompt['prompt']}")
+    print(f"Scene: {prompt['components']['scene']}")
+    print(f"Characters: {prompt['components']['characters']}")
+```
+
+### Generate from Character Perspective
+
+```python
+# Generate prompts from Nora's perspective
+prompts = engine.generate_prompts_for_character(
+    character_name="Nora Smith",
+    min_episode=1,
+    max_episode=20,
+    limit=5
+)
+```
+
+### Get Top Engaging Prompts
+
+```python
+# Get top 10 most engaging prompts
+prompts = engine.generate_top_engaging_prompts(count=10)
+
+for prompt in prompts:
+    print(engine.get_prompt_summary(prompt))
+```
+
+### Generate for Episode Range
+
+```python
+# Generate prompts for episodes 1-10
+prompts = engine.generate_prompts_for_episode_range(
+    start_episode=1,
+    end_episode=10,
+    characters_per_cliffhanger=2  # Multiple perspectives per cliffhanger
+)
+```
+
+### Prompt Structure
+
+Each prompt dictionary contains:
+- `prompt`: Full VEO prompt string
+- `components`: Structured components (scene, characters, descriptions)
+- `scene_data`: Extracted scene information
+- `episode`: Episode number
+- `cliffhanger_title`: Title of the cliffhanger
+- `perspective_character`: Character perspective (if specified)
+- `mood`: Emotional mood of the scene
+- `location`: Scene location
+
 ## Requirements
 
 These modules require the `requests` library. Make sure it's installed:
@@ -239,3 +314,4 @@ pip install requests
 
 Add it to your `requirements.txt` if not already present.
 
+The post generation engine only uses standard library modules (re, pathlib, typing) and doesn't require additional dependencies.
