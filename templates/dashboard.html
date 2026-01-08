@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - {{ user.display_name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Welcome, {{ user.display_name }}!</h1>
+    {% if user.is_official %}
+        <p class="subtitle">⭐ Official Character Dashboard</p>
+        {% set char_data = user.get_character_data() %}
+        {% if char_data.get('show_name') %}
+            <p class="subtitle">from <em>{{ char_data.show_name }}</em></p>
+        {% endif %}
+    {% endif %}
+</div>
+
+<div class="dashboard-container">
+    <div class="dashboard-tabs">
+        <button class="tab-btn active" onclick="showTab('create-post')">Create Post</button>
+        <button class="tab-btn" onclick="showTab('create-comment')">Create Comment</button>
+        <button class="tab-btn" onclick="showTab('recent')">Recent Activity</button>
+    </div>
+
+    <!-- Create Post Tab -->
+    <div id="create-post" class="tab-content active">
+        <div class="dashboard-section">
+            <h2>Create New Post</h2>
+            <form method="POST" action="{{ url_for('main.create_post_dashboard') }}" class="form">
+                <div class="form-group">
+                    <label for="pocketshow_id">Pocketshow *</label>
+                    <select id="pocketshow_id" name="pocketshow_id" required>
+                        <option value="">Select a pocketshow</option>
+                        {% for pocketshow in pocketshows %}
+                            <option value="{{ pocketshow.id }}">r/{{ pocketshow.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Post Title *</label>
+                    <input type="text" id="title" name="title" required maxlength="200">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="2" placeholder="Optional description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea id="content" name="content" rows="6" placeholder="Post content"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="image_url">Image URL</label>
+                    <input type="url" id="image_url" name="image_url" placeholder="https://example.com/image.jpg">
+                </div>
+
+                <div class="form-group">
+                    <label for="video_url">Video URL</label>
+                    <input type="url" id="video_url" name="video_url" placeholder="https://example.com/video.mp4">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create Post</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Comment Tab -->
+    <div id="create-comment" class="tab-content">
+        <div class="dashboard-section">
+            <h2>Create New Comment</h2>
+            <form method="POST" action="{{ url_for('main.create_comment_dashboard') }}" class="form">
+                <div class="form-group">
+                    <label for="post_id">Post ID *</label>
+                    <input type="number" id="post_id" name="post_id" required placeholder="Enter the post ID to comment on">
+                    <small>You can find the post ID in the URL when viewing a post</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Comment Content *</label>
+                    <textarea id="content" name="content" rows="6" required placeholder="Your comment"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="parent_id">Parent Comment ID (Optional)</label>
+                    <input type="number" id="parent_id" name="parent_id" placeholder="Leave empty for top-level comment">
+                    <small>Enter a comment ID if this is a reply to another comment</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create Comment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Recent Activity Tab -->
+    <div id="recent" class="tab-content">
+        <div class="dashboard-section">
+            <h2>Recent Posts</h2>
+            {% if recent_posts %}
+                <div class="recent-list">
+                    {% for post in recent_posts %}
+                        <div class="recent-item">
+                            <h3><a href="{{ url_for('main.view_post', post_id=post.id) }}">{{ post.title }}</a></h3>
+                            <p class="meta">Posted {{ post.created_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
+                            <p class="meta">{{ post.comments|length }} comments</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="empty-state">No posts yet</p>
+            {% endif %}
+        </div>
+
+        <div class="dashboard-section" style="margin-top: 2rem;">
+            <h2>Recent Comments</h2>
+            {% if recent_comments %}
+                <div class="recent-list">
+                    {% for comment in recent_comments %}
+                        <div class="recent-item">
+                            <p>{{ comment.content[:100] }}{% if comment.content|length > 100 %}...{% endif %}</p>
+                            <p class="meta">
+                                <a href="{{ url_for('main.view_post', post_id=comment.post_id) }}">View Post</a> | 
+                                Posted {{ comment.created_at.strftime('%B %d, %Y at %I:%M %p') }}
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="empty-state">No comments yet</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+function showTab(tabName) {
+    // Hide all tabs
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Remove active class from all buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Show selected tab
+    document.getElementById(tabName).classList.add('active');
+    
+    // Add active class to clicked button
+    event.target.classList.add('active');
+}
+</script>
+{% endblock %}
+{% endblock %}
+

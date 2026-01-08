@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Pocketverse{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Register</h1>
+    <p class="subtitle">Create a new account</p>
+</div>
+
+<div class="form-container">
+    <form method="POST" action="{{ url_for('main.register') }}" class="form">
+        <h3>Account Information</h3>
+        
+        <div class="form-group">
+            <label for="username">Username *</label>
+            <input type="text" id="username" name="username" required autofocus maxlength="100">
+            <small>This will be used for login</small>
+        </div>
+
+        <div class="form-group">
+            <label for="display_name">Display Name *</label>
+            <input type="text" id="display_name" name="display_name" required maxlength="100">
+            <small>This is how your name will appear</small>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password *</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password_confirm">Confirm Password *</label>
+            <input type="password" id="password_confirm" name="password_confirm" required>
+        </div>
+
+        <hr style="margin: 2rem 0; border: 1px solid #eee;">
+
+        <h3>Official Character (Optional)</h3>
+        <p class="subtitle" style="margin-bottom: 1rem;">Check this if you're creating an official character from a PocketFM story</p>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="is_official" name="is_official">
+                This is an official character
+            </label>
+        </div>
+
+        <div id="character-fields" style="display: none;">
+            <div class="form-group">
+                <label for="show_name">Show Name</label>
+                <input type="text" id="show_name" name="show_name" maxlength="200">
+                <small>Name of the story/show this character is from</small>
+            </div>
+
+            <div class="form-group">
+                <label for="character_name">Character Name</label>
+                <input type="text" id="character_name" name="character_name" maxlength="200">
+                <small>Character's name in the story</small>
+            </div>
+
+            <div class="form-group">
+                <label for="avatar_url">Avatar URL</label>
+                <input type="url" id="avatar_url" name="avatar_url" maxlength="500">
+                <small>URL to character's avatar image</small>
+            </div>
+
+            <div class="form-group">
+                <label for="bio">Bio</label>
+                <textarea id="bio" name="bio" rows="3" maxlength="500"></textarea>
+                <small>Character biography</small>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Register</button>
+            <a href="{{ url_for('main.login') }}" class="btn btn-secondary">Back to Login</a>
+        </div>
+    </form>
+</div>
+
+{% block extra_js %}
+<script>
+document.getElementById('is_official').addEventListener('change', function() {
+    const characterFields = document.getElementById('character-fields');
+    characterFields.style.display = this.checked ? 'block' : 'none';
+});
+</script>
+{% endblock %}
+{% endblock %}
+

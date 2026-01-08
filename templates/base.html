@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pocketverse{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url_for('main.index') }}" class="logo">Pocketverse</a>
+            <div class="nav-links">
+                <a href="{{ url_for('main.index') }}">Home</a>
+                <a href="{{ url_for('main.create_pocketshow') }}">Create Pocketshow</a>
+                {% if session.get('user_id') %}
+                    {% if session.get('is_official') %}
+                        <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
+                    {% endif %}
+                    <a href="{{ url_for('main.logout') }}">Logout ({{ session.get('username') }})</a>
+                {% else %}
+                    <a href="{{ url_for('main.login') }}">Login</a>
+                    <a href="{{ url_for('main.register') }}">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Pocketverse. A Reddit-style community platform.</p>
+        </div>
+    </footer>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Create Pocketshow - Pocketverse{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Create a New Pocketshow</h1>
+    <p class="subtitle">Start your own community</p>
+</div>
+
+<div class="form-container">
+    <form method="POST" action="{{ url_for('main.create_pocketshow') }}" class="form">
+        <div class="form-group">
+            <label for="name">Pocketshow Name *</label>
+            <input type="text" id="name" name="name" required maxlength="100" placeholder="e.g., technology, music, gaming">
+            <small>This will be the unique identifier for your pocketshow</small>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" placeholder="What is this pocketshow about?"></textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Create Pocketshow</button>
+            <a href="{{ url_for('main.index') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

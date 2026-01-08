@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - Pocketverse{% endblock %}
+
+{% block content %}
+<div class="post-view">
+    <div class="post-header">
+        <a href="{{ url_for('main.view_pocketshow', pocketshow_id=post.pocketshow_id) }}" class="pocketshow-link">
+            r/{{ post.pocketshow.name }}
+        </a>
+        <h1>{{ post.title }}</h1>
+        <div class="post-meta">
+            {% if post.author_user %}
+                <span class="author">
+                    {% if post.author_user.is_official %}
+                        <span class="official-badge">⭐ Official</span>
+                    {% endif %}
+                    <strong>{{ post.author_user.display_name }}</strong>
+                    {% if post.author_user.is_official and post.author_user.get_character_data() %}
+                        <span class="character-info">
+                            {% set char_data = post.author_user.get_character_data() %}
+                            {% if char_data.get('show_name') %}
+                                from <em>{{ char_data.show_name }}</em>
+                            {% endif %}
+                        </span>
+                    {% endif %}
+                </span>
+            {% endif %}
+            <span class="date">Posted {{ post.created_at.strftime('%B %d, %Y at %I:%M %p') }}</span>
+        </div>
+        <div class="post-voting" data-post-id="{{ post.id }}">
+            <button class="vote-btn upvote" onclick="votePost({{ post.id }}, true)">
+                <span>▲</span>
+            </button>
+            <span class="vote-score" id="vote-score-{{ post.id }}">{{ post.get_vote_score() }}</span>
+            <button class="vote-btn downvote" onclick="votePost({{ post.id }}, false)">
+                <span>▼</span>
+            </button>
+        </div>
+    </div>
+
+    {% if post.description %}
+        <div class="post-description">
+            <p>{{ post.description }}</p>
+        </div>
+    {% endif %}
+
+    {% if post.content %}
+        <div class="post-content">
+            <p>{{ post.content }}</p>
+        </div>
+    {% endif %}
+
+    {% if post.image_url %}
+        <div class="post-media">
+            <img src="{{ post.image_url }}" alt="Post image" class="post-image">
+        </div>
+    {% endif %}
+
+    {% if post.video_url %}
+        <div class="post-media">
+            <video controls class="post-video">
+                <source src="{{ post.video_url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    {% endif %}
+
+    <div class="comments-section">
+        <h2>{{ comments|length }} Comment{{ 's' if comments|length != 1 else '' }}</h2>
+
+        <div class="comment-form-container">
+            <h3>Add a Comment</h3>
+            <form method="POST" action="{{ url_for('main.add_comment', post_id=post.id) }}" class="comment-form">
+                <!-- <div class="form-group">
+                    <label for="author_id">Comment as</label>
+                    <select id="author_id" name="author_id" class="user-select">
+                        <option value="">Anonymous</option>
+                        {% for user in users %}
+                            <option value="{{ user.id }}">
+                                {{ user.display_name }}
+                                {% if user.is_official %}
+                                    ⭐ (Official)
+                                {% endif %}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <small>Or enter a name below (for backward compatibility)</small>
+                </div> -->
+                <div class="form-group">
+                    <label for="author">Your Name</label>
+                    <input type="text" id="author" name="author" placeholder="John Doe" maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="content">Comment *</label>
+                    <textarea id="content" name="content" rows="4" required placeholder="What are your thoughts?"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Post Comment</button>
+            </form>
+        </div>
+
+        <div class="comments-list">
+            {% if comments %}
+                {% for comment in comments %}
+                    {% include 'comment.html' %}
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <p>No comments yet. Be the first to comment!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Simple user ID storage (in production, use proper session/auth)
+let currentUserId = null;
+
+function votePost(postId, isUpvote) {
+    // For demo purposes, prompt for user ID
+    // In production, get from session/auth
+    if (!currentUserId) {
+        const userId = prompt('Enter your user ID to vote:');
+        if (!userId) return;
+        currentUserId = parseInt(userId);
+    }
+    
+    fetch(`/post/${postId}/vote`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            user_id: currentUserId,
+            is_upvote: isUpvote
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById(`vote-score-${postId}`).textContent = data.vote_score;
+        } else {
+            alert('Error: ' + (data.error || 'Failed to vote'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to vote. Please try again.');
+    });
+}
+
+function voteComment(commentId, isUpvote) {
+    if (!currentUserId) {
+        const userId = prompt('Enter your user ID to vote:');
+        if (!userId) return;
+        currentUserId = parseInt(userId);
+    }
+    
+    fetch(`/comment/${commentId}/vote`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            user_id: currentUserId,
+            is_upvote: isUpvote
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById(`comment-vote-score-${commentId}`).textContent = data.vote_score;
+        } else {
+            alert('Error: ' + (data.error || 'Failed to vote'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to vote. Please try again.');
+    });
+}
+</script>
+{% endblock %}
+
