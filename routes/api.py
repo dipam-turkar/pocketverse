@@ -22,6 +22,18 @@ def register():
     character_data = data.get('character_data', {})
     watched_shows = data.get('watched_shows', {})
     
+    # Support for setting initial watched episodes during registration
+    # Can be passed as: { "show_name": episode_number } or via initial_episodes parameter
+    initial_episodes = data.get('initial_episodes', {})
+    if initial_episodes and isinstance(initial_episodes, dict):
+        # Merge initial_episodes into watched_shows
+        for show_name, episode in initial_episodes.items():
+            if isinstance(episode, (int, str)):
+                try:
+                    watched_shows[show_name] = int(episode)
+                except (ValueError, TypeError):
+                    pass
+    
     # Check if username already exists
     if User.query.filter_by(username=username).first():
         return jsonify({'error': 'A user with this username already exists'}), 400
@@ -396,6 +408,17 @@ def create_post(pocketshow_id):
             return jsonify({'error': 'author_id must be an integer'}), 400
     metadata = data.get('metadata', {})
     
+    # Episode-based tagging
+    show_name = data.get('show_name', '').strip() or None
+    episode_tag = data.get('episode_tag')
+    if episode_tag is not None:
+        try:
+            episode_tag = int(episode_tag)
+            if episode_tag < 0:
+                return jsonify({'error': 'episode_tag must be a non-negative integer'}), 400
+        except (ValueError, TypeError):
+            return jsonify({'error': 'episode_tag must be an integer'}), 400
+    
     # Validate author_id if provided
     if author_id:
         author = User.query.get(author_id)
@@ -409,7 +432,9 @@ def create_post(pocketshow_id):
         pocketshow_id=pocketshow_id,
         author_id=author_id,
         image_url=image_url,
-        video_url=video_url
+        video_url=video_url,
+        show_name=show_name,
+        episode_tag=episode_tag
     )
     
     if metadata:
@@ -418,21 +443,109 @@ def create_post(pocketshow_id):
     db.session.add(post)
     db.session.commit()
     
+    # Trigger automatic comment generation from official characters
+    try:
+        import os
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        canon_directory = os.path.join(project_root, 'PromoCanon_Show_33adb096b04ecd6b23ce9341160b199f2d489311_1_100')
+        
+        from services.comment_generator import CommentGenerator
+        comment_generator = CommentGenerator(canon_directory=canon_directory)
+        comment_generator.generate_comments_for_post(post, trigger_type="post_created")
+    except Exception as e:
+        print(f"[API] ⚠️ Error generating automatic comments: {e}")
+        import traceback
+        traceback.print_exc()
+    
     return jsonify(post.to_dict()), 201
 
 
 @api_bp.route('/posts', methods=['GET'])
 def list_all_posts():
-    """API endpoint to list all posts"""
-    posts = Post.query.order_by(Post.created_at.desc()).all()
+    """API endpoint to list all posts, filtered by user's watched episodes"""
+    query = Post.query
+    
+    # Filter by episode if user is authenticated
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+        if user:
+            watched_shows = user.get_watched_shows()
+            if watched_shows:
+                # Build filter: show posts where:
+                # 1. No show_name/episode_tag (not tagged, show to everyone)
+                # 2. show_name not in user's watched_shows (different show, show to everyone)
+                # 3. show_name in watched_shows AND episode_tag <= user's watched episode
+                from sqlalchemy import or_, and_  # noqa: F401
+                
+                conditions = [
+                    Post.show_name.is_(None),  # Posts without show tags
+                    Post.episode_tag.is_(None),  # Posts without episode tags
+                ]
+                
+                # For each show the user watches, add condition
+                for show_name, watched_episode in watched_shows.items():
+                    try:
+                        watched_episode = int(watched_episode)
+                        conditions.append(
+                            and_(
+                                Post.show_name == show_name,
+                                Post.episode_tag <= watched_episode
+                            )
+                        )
+                    except (ValueError, TypeError):
+                        # Skip invalid episode numbers
+                        continue
+                
+                # Also show posts from shows user hasn't watched (different shows)
+                if conditions:
+                    query = query.filter(or_(*conditions))
+    
+    posts = query.order_by(Post.created_at.desc()).all()
     return jsonify([p.to_dict() for p in posts]), 200
 
 
 @api_bp.route('/pocketshows/<int:pocketshow_id>/posts', methods=['GET'])
 def list_posts(pocketshow_id):
-    """API endpoint to list posts in a pocketshow"""
+    """API endpoint to list posts in a pocketshow, filtered by user's watched episodes"""
     Pocketshow.query.get_or_404(pocketshow_id)
-    posts = Post.query.filter_by(pocketshow_id=pocketshow_id).order_by(Post.created_at.desc()).all()
+    query = Post.query.filter_by(pocketshow_id=pocketshow_id)
+    
+    # Filter by episode if user is authenticated
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+        if user:
+            watched_shows = user.get_watched_shows()
+            if watched_shows:
+                # Build filter: show posts where:
+                # 1. No show_name/episode_tag (not tagged, show to everyone)
+                # 2. show_name not in user's watched_shows (different show, show to everyone)
+                # 3. show_name in watched_shows AND episode_tag <= user's watched episode
+                from sqlalchemy import or_, and_  # noqa: F401
+                
+                conditions = [
+                    Post.show_name.is_(None),  # Posts without show tags
+                    Post.episode_tag.is_(None),  # Posts without episode tags
+                ]
+                
+                # For each show the user watches, add condition
+                for show_name, watched_episode in watched_shows.items():
+                    try:
+                        watched_episode = int(watched_episode)
+                        conditions.append(
+                            and_(
+                                Post.show_name == show_name,
+                                Post.episode_tag <= watched_episode
+                            )
+                        )
+                    except (ValueError, TypeError):
+                        # Skip invalid episode numbers
+                        continue
+                
+                # Also show posts from shows user hasn't watched (different shows)
+                if conditions:
+                    query = query.filter(or_(*conditions))
+    
+    posts = query.order_by(Post.created_at.desc()).all()
     return jsonify([p.to_dict() for p in posts]), 200
 
 
@@ -489,6 +602,20 @@ def create_comment(post_id):
     
     db.session.add(comment)
     db.session.commit()
+    
+    # Trigger automatic comment generation from official characters
+    try:
+        import os
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        canon_directory = os.path.join(project_root, 'PromoCanon_Show_33adb096b04ecd6b23ce9341160b199f2d489311_1_100')
+        
+        from services.comment_generator import CommentGenerator
+        comment_generator = CommentGenerator(canon_directory=canon_directory)
+        comment_generator.generate_comments_for_post(post, trigger_type="user_commented", user_comment=comment)
+    except Exception as e:
+        print(f"[API] ⚠️ Error generating automatic comments: {e}")
+        import traceback
+        traceback.print_exc()
     
     return jsonify(comment.to_dict()), 201
 

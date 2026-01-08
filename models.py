@@ -131,6 +131,9 @@ class Post(db.Model):
     video_url = db.Column(db.String(500), nullable=True)
     # Metadata as JSON string (renamed from 'metadata' to avoid SQLAlchemy conflict)
     post_metadata = db.Column(db.Text, nullable=True)  # JSON string for additional metadata
+    # Episode-based tagging for spoiler prevention
+    show_name = db.Column(db.String(200), nullable=True, index=True)  # Name of the show this post relates to
+    episode_tag = db.Column(db.Integer, nullable=True, index=True)  # Episode number this post is tagged with
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Relationships
@@ -169,6 +172,8 @@ class Post(db.Model):
             'image_url': self.image_url,
             'video_url': self.video_url,
             'metadata': self.get_metadata(),
+            'show_name': self.show_name,
+            'episode_tag': self.episode_tag,
             'created_at': self.created_at.isoformat(),
             'comment_count': len(self.comments),
             'vote_score': self.get_vote_score()
