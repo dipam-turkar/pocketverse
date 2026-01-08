@@ -14,6 +14,8 @@ class User(db.Model):
     is_official = db.Column(db.Boolean, default=False, nullable=False, index=True)
     # Character data for official users (JSON field)
     character_data = db.Column(db.Text, nullable=True)  # JSON string: {show_name, character_name, avatar_url, bio, etc}
+    # Watched shows tracking: JSON string: {show_id: last_episode_watched, ...}
+    watched_shows = db.Column(db.Text, nullable=True)  # JSON string: {"show_name": episode_number, ...}
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Relationships
@@ -36,6 +38,25 @@ class User(db.Model):
     def set_character_data(self, data):
         """Set character data from dict"""
         self.character_data = json.dumps(data) if data else None
+    
+    def get_watched_shows(self):
+        """Parse and return watched shows as dict"""
+        if self.watched_shows:
+            try:
+                return json.loads(self.watched_shows)
+            except:
+                return {}
+        return {}
+    
+    def set_watched_shows(self, data):
+        """Set watched shows from dict"""
+        self.watched_shows = json.dumps(data) if data else None
+    
+    def update_watched_episode(self, show_name, episode_number):
+        """Update the last watched episode for a show"""
+        watched = self.get_watched_shows()
+        watched[show_name] = episode_number
+        self.set_watched_shows(watched)
     
     def set_password(self, password):
         """Set password hash"""
@@ -65,6 +86,7 @@ class User(db.Model):
             'display_name': self.display_name,
             'is_official': self.is_official,
             'character_data': self.get_character_data(),
+            'watched_shows': self.get_watched_shows(),
             'created_at': self.created_at.isoformat()
         }
 

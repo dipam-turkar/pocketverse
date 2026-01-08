@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from config import Config
 from extensions import db
 
@@ -6,6 +7,9 @@ def create_app(config_class=Config):
     """Application factory pattern"""
     app = Flask(__name__)
     app.config.from_object(config_class)
+    
+    # Enable CORS for React frontend
+    CORS(app, origins=["http://localhost:8080", "http://127.0.0.1:8080"], supports_credentials=True)
     
     # Set secret key for sessions if not already set
     if not app.config.get('SECRET_KEY'):

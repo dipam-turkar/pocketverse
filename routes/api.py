@@ -1,8 +1,138 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session
 from extensions import db
 from models import Pocketshow, Post, Comment, User, Vote
 
 api_bp = Blueprint('api', __name__)
+
+
+# ==================== AUTHENTICATION ENDPOINTS ====================
+
+@api_bp.route('/auth/register', methods=['POST'])
+def register():
+    """API endpoint to register a new user"""
+    data = request.get_json()
+    
+    if not data or not data.get('username') or not data.get('display_name'):
+        return jsonify({'error': 'Username and display_name are required'}), 400
+    
+    username = data['username'].strip()
+    display_name = data['display_name'].strip()
+    password = data.get('password', '').strip()
+    is_official = data.get('is_official', False)
+    character_data = data.get('character_data', {})
+    watched_shows = data.get('watched_shows', {})
+    
+    # Check if username already exists
+    if User.query.filter_by(username=username).first():
+        return jsonify({'error': 'A user with this username already exists'}), 400
+    
+    user = User(
+        username=username,
+        display_name=display_name,
+        is_official=is_official
+    )
+    
+    if password:
+        user.set_password(password)
+    
+    if is_official and character_data:
+        user.set_character_data(character_data)
+    
+    if watched_shows:
+        user.set_watched_shows(watched_shows)
+    
+    db.session.add(user)
+    db.session.commit()
+    
+    # Auto-login after registration
+    session['user_id'] = user.id
+    session['username'] = user.username
+    session['is_official'] = user.is_official
+    
+    return jsonify({
+        'success': True,
+        'user': user.to_dict_safe()
+    }), 201
+
+
+@api_bp.route('/auth/login', methods=['POST'])
+def login():
+    """API endpoint to login a user"""
+    data = request.get_json()
+    
+    if not data or not data.get('username'):
+        return jsonify({'error': 'Username is required'}), 400
+    
+    username = data['username'].strip()
+    password = data.get('password', '').strip()
+    
+    user = User.query.filter_by(username=username).first()
+    
+    if not user:
+        return jsonify({'error': 'Invalid username or password'}), 401
+    
+    # Check password if provided
+    if password and not user.check_password(password):
+        return jsonify({'error': 'Invalid username or password'}), 401
+    
+    # Set session
+    session['user_id'] = user.id
+    session['username'] = user.username
+    session['is_official'] = user.is_official
+    
+    return jsonify({
+        'success': True,
+        'user': user.to_dict_safe()
+    }), 200
+
+
+@api_bp.route('/auth/logout', methods=['POST'])
+def logout():
+    """API endpoint to logout a user"""
+    session.clear()
+    return jsonify({'success': True}), 200
+
+
+@api_bp.route('/auth/me', methods=['GET'])
+def get_current_user():
+    """API endpoint to get current logged-in user"""
+    if 'user_id' not in session:
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    user = User.query.get(session['user_id'])
+    if not user:
+        session.clear()
+        return jsonify({'error': 'User not found'}), 404
+    
+    return jsonify(user.to_dict_safe()), 200
+
+
+@api_bp.route('/auth/update_watched', methods=['POST'])
+def update_watched_episode():
+    """API endpoint to update watched episode for a show"""
+    if 'user_id' not in session:
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    data = request.get_json()
+    if not data or 'show_name' not in data or 'episode' not in data:
+        return jsonify({'error': 'show_name and episode are required'}), 400
+    
+    user = User.query.get(session['user_id'])
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+    
+    show_name = data['show_name']
+    episode = data['episode']
+    
+    watched_shows = user.get_watched_shows()
+    watched_shows[show_name] = episode
+    user.set_watched_shows(watched_shows)
+    db.session.commit()
+    
+    return jsonify({
+        'success': True,
+        'watched_shows': user.get_watched_shows()
+    }), 200
 
 
 # ==================== USER ENDPOINTS ====================
@@ -41,6 +171,133 @@ def create_user():
     db.session.commit()
     
     return jsonify(user.to_dict_safe()), 201
+
+
+@api_bp.route('/characters/available', methods=['GET'])
+def get_available_characters():
+    """API endpoint to get available characters from PromoCanon that haven't been created as users yet"""
+    try:
+        import os
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        canon_directory = os.path.join(project_root, 'PromoCanon_Show_33adb096b04ecd6b23ce9341160b199f2d489311_1_100')
+        
+        from modules.promo_canon_parser import PromoCanonLoader
+        canon_loader = PromoCanonLoader(canon_directory)
+        characters = canon_loader.load_characters()
+        
+        # Get all existing official users
+        existing_users = User.query.filter_by(is_official=True).all()
+        existing_character_names = set()
+        for user in existing_users:
+            char_data = user.get_character_data()
+            char_name = char_data.get('character_name') if char_data else None
+            if char_name:
+                existing_character_names.add(char_name)
+            # Also check display_name
+            existing_character_names.add(user.display_name)
+        
+        # Filter out characters that already exist
+        available_characters = []
+        for char_name, char_data in characters.items():
+            if char_name not in existing_character_names:
+                available_characters.append({
+                    'name': char_name,
+                    'description': char_data.get('description', ''),
+                    'personality': char_data.get('personality', ''),
+                })
+        
+        print(f"[API] Found {len(available_characters)} available characters from PromoCanon")
+        return jsonify({
+            'success': True,
+            'characters': available_characters
+        }), 200
+        
+    except Exception as e:
+        print(f"[API] Error loading available characters: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500
+
+
+@api_bp.route('/characters/create', methods=['POST'])
+def create_character_from_promocanon():
+    """API endpoint to create an official user from PromoCanon character data"""
+    data = request.get_json()
+    
+    if not data or not data.get('character_name'):
+        return jsonify({'error': 'character_name is required'}), 400
+    
+    character_name = data['character_name'].strip()
+    password = data.get('password', '').strip()
+    show_name = data.get('show_name', 'Default Show').strip()
+    
+    try:
+        import os
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        canon_directory = os.path.join(project_root, 'PromoCanon_Show_33adb096b04ecd6b23ce9341160b199f2d489311_1_100')
+        
+        from modules.promo_canon_parser import PromoCanonLoader
+        canon_loader = PromoCanonLoader(canon_directory)
+        characters = canon_loader.load_characters()
+        
+        if character_name not in characters:
+            return jsonify({'error': f'Character "{character_name}" not found in PromoCanon'}), 404
+        
+        # Check if character already exists
+        existing_users = User.query.filter_by(is_official=True).all()
+        for user in existing_users:
+            char_data = user.get_character_data()
+            if char_data and char_data.get('character_name') == character_name:
+                return jsonify({'error': f'Character "{character_name}" already exists as a user'}), 400
+            if user.display_name == character_name:
+                return jsonify({'error': f'Character "{character_name}" already exists as a user'}), 400
+        
+        # Get character data from PromoCanon
+        canon_char = characters[character_name]
+        
+        # Create username from character name (sanitize)
+        username = character_name.lower().replace(' ', '_').replace("'", '').replace('-', '_')
+        # Ensure username is unique
+        base_username = username
+        counter = 1
+        while User.query.filter_by(username=username).first():
+            username = f"{base_username}_{counter}"
+            counter += 1
+        
+        # Create user with character data
+        user = User(
+            username=username,
+            display_name=character_name,
+            is_official=True
+        )
+        
+        if password:
+            user.set_password(password)
+        
+        # Set character data
+        character_data = {
+            'character_name': character_name,
+            'show_name': show_name,
+            'bio': canon_char.get('description', ''),
+            'personality': canon_char.get('personality', ''),
+            'description': canon_char.get('description', ''),
+        }
+        user.set_character_data(character_data)
+        
+        db.session.add(user)
+        db.session.commit()
+        
+        print(f"[API] ✅ Created official user for character: {character_name}")
+        return jsonify({
+            'success': True,
+            'user': user.to_dict_safe()
+        }), 201
+        
+    except Exception as e:
+        print(f"[API] Error creating character: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500
 
 
 @api_bp.route('/users', methods=['GET'])
@@ -162,6 +419,13 @@ def create_post(pocketshow_id):
     db.session.commit()
     
     return jsonify(post.to_dict()), 201
+
+
+@api_bp.route('/posts', methods=['GET'])
+def list_all_posts():
+    """API endpoint to list all posts"""
+    posts = Post.query.order_by(Post.created_at.desc()).all()
+    return jsonify([p.to_dict() for p in posts]), 200
 
 
 @api_bp.route('/pocketshows/<int:pocketshow_id>/posts', methods=['GET'])

@@ -132,6 +132,20 @@ def add_comment(post_id):
     db.session.add(comment)
     db.session.commit()
     
+    # Trigger automatic comment generation from official characters
+    try:
+        import os
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        canon_directory = os.path.join(project_root, 'PromoCanon_Show_33adb096b04ecd6b23ce9341160b199f2d489311_1_100')
+        
+        from services.comment_generator import CommentGenerator
+        comment_generator = CommentGenerator(canon_directory=canon_directory)
+        comment_generator.generate_comments_for_post(post, trigger_type="user_commented", user_comment=comment)
+    except Exception as e:
+        print(f"[MAIN] ⚠️ Error generating automatic comments: {e}")
+        import traceback
+        traceback.print_exc()
+    
     flash('Comment added successfully!', 'success')
     return redirect(url_for('main.view_post', post_id=post_id))
 
@@ -399,6 +413,20 @@ def create_post_dashboard():
         db.session.add(post)
         db.session.commit()
         
+        # Trigger automatic comment generation from official characters
+        try:
+            import os
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            canon_directory = os.path.join(project_root, 'PromoCanon_Show_33adb096b04ecd6b23ce9341160b199f2d489311_1_100')
+            
+            from services.comment_generator import CommentGenerator
+            comment_generator = CommentGenerator(canon_directory=canon_directory)
+            comment_generator.generate_comments_for_post(post, trigger_type="post_created")
+        except Exception as e:
+            print(f"[MAIN] ⚠️ Error generating automatic comments: {e}")
+            import traceback
+            traceback.print_exc()
+        
         flash(f'Post "{title}" created successfully!', 'success')
         return redirect(url_for('main.view_post', post_id=post.id))
     except Exception as e:
@@ -442,6 +470,20 @@ def create_comment_dashboard():
         
         db.session.add(comment)
         db.session.commit()
+        
+        # Trigger automatic comment generation from official characters
+        try:
+            import os
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            canon_directory = os.path.join(project_root, 'PromoCanon_Show_33adb096b04ecd6b23ce9341160b199f2d489311_1_100')
+            
+            from services.comment_generator import CommentGenerator
+            comment_generator = CommentGenerator(canon_directory=canon_directory)
+            comment_generator.generate_comments_for_post(post, trigger_type="user_commented", user_comment=comment)
+        except Exception as e:
+            print(f"[MAIN] ⚠️ Error generating automatic comments: {e}")
+            import traceback
+            traceback.print_exc()
         
         flash('Comment created successfully!', 'success')
         return redirect(url_for('main.view_post', post_id=post_id))
