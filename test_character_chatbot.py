@@ -249,10 +249,10 @@ def run_test_scenario(
     """
     from services.story_context import StoryContextService
     
-    # Build post content
+    # Build post content (no truncation - full context is important)
     post_content = f"{scenario['post']['title']}\n\n{scenario['post']['caption']}\n\n{scenario['post']['content']}"
     if scenario['post'].get('image_scene'):
-        post_content = f"[Image: {scenario['post']['image_scene'][:200]}...]\n\n{post_content}"
+        post_content = f"[Image: {scenario['post']['image_scene']}]\n\n{post_content}"
     
     # Get user comment
     user_comment = scenario['user_comments'][comment_index % len(scenario['user_comments'])]
@@ -338,10 +338,10 @@ def print_post(scenario: Dict):
     """Print the post details."""
     post = scenario['post']
     print("\n📷 IMAGE SCENE:")
-    print(f"   {post['image_scene'][:150]}...")
+    print(f"   {post['image_scene']}")
     print(f"\n📌 POST TITLE: {post['title']}")
     print(f"💬 CAPTION: {post['caption']}")
-    print(f"📄 CONTENT: {post['content'][:100]}...")
+    print(f"📄 CONTENT: {post['content']}")
 
 
 def print_result(result: Dict, comment_num: int):

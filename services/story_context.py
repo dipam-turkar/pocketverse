@@ -213,9 +213,9 @@ class StoryContextService:
             "rhythm": voice.get("rhythm", "normal"),
             "emotional_default": voice.get("emotional_default", "neutral"),
             "humor": voice.get("humor", "none"),
-            "verbal_tics": ", ".join(verbal_tics[:5]) if verbal_tics else "None specific",
-            "never_says": ", ".join(never_says[:5]) if never_says else "None specific",
-            "reddit_phrases": ", ".join(reddit_phrases[:10]) if reddit_phrases else "None specific"
+            "verbal_tics": ", ".join(verbal_tics) if verbal_tics else "None specific",
+            "never_says": ", ".join(never_says) if never_says else "None specific",
+            "reddit_phrases": ", ".join(reddit_phrases) if reddit_phrases else "None specific"
         }
     
     # =========================================================================
@@ -281,6 +281,7 @@ class StoryContextService:
     ) -> str:
         """
         Format previous plot summaries as a string for LLM prompt.
+        No truncation - full context is important for quality responses.
         """
         summaries = self.get_previous_plot_summaries(current_beat_id, show_id, max_summaries)
         
@@ -290,11 +291,7 @@ class StoryContextService:
         lines = []
         for summary in summaries:
             lines.append(f"**Beat {summary['beat_id']} - {summary['title']} ({summary['episode_range']}):**")
-            # Truncate long summaries
-            text = summary['summary']
-            if len(text) > 500:
-                text = text[:500] + "..."
-            lines.append(text)
+            lines.append(summary['summary'])
             lines.append("")
         
         return "\n".join(lines)
@@ -409,7 +406,7 @@ class StoryContextService:
         if data["known_facts"]:
             lines.append("")
             lines.append("### Facts now known to user:")
-            for fact in data["known_facts"][:10]:  # Limit to 10
+            for fact in data["known_facts"]:
                 lines.append(f"- {fact}")
         
         return "\n".join(lines)
@@ -528,43 +525,43 @@ class StoryContextService:
         
         lines = []
         
-        # What character knows
+        # Emotional state FIRST (most important for authentic responses)
+        if knowledge.get("emotional_state"):
+            lines.append("### 🎭 YOUR CURRENT EMOTIONAL STATE:")
+            lines.append(knowledge["emotional_state"])
+            lines.append("")
+        
+        # Relationships (important for tone)
+        if knowledge.get("relationships"):
+            lines.append("### Key Relationships Right Now:")
+            for person, status in knowledge.get("relationships", {}).items():
+                lines.append(f"- {person}: {status}")
+            lines.append("")
+        
+        # What character knows (full list - no truncation)
         lines.append("### What YOU know at this point:")
-        for item in knowledge.get("knows", [])[:15]:
+        for item in knowledge.get("knows", []):
             lines.append(f"- {item}")
         
-        # What character doesn't know
+        # What character doesn't know (important for authenticity)
         lines.append("")
-        lines.append("### What YOU don't know yet (respond with genuine ignorance if asked):")
-        for item in knowledge.get("doesnt_know", [])[:10]:
+        lines.append("### What YOU genuinely don't know yet (be authentically ignorant):")
+        for item in knowledge.get("doesnt_know", []):
             lines.append(f"- {item}")
         
         # Can discuss freely
         if knowledge.get("can_discuss_freely"):
             lines.append("")
-            lines.append("### Topics you can discuss freely:")
-            for item in knowledge["can_discuss_freely"][:10]:
+            lines.append("### Topics you can discuss openly:")
+            for item in knowledge["can_discuss_freely"]:
                 lines.append(f"- {item}")
         
-        # Must not reveal
+        # Must not reveal (critical for spoiler control)
         if knowledge.get("must_not_reveal"):
             lines.append("")
-            lines.append("### Things you MUST NOT reveal:")
-            for item in knowledge["must_not_reveal"][:10]:
+            lines.append("### 🚫 Things you MUST NOT reveal:")
+            for item in knowledge["must_not_reveal"]:
                 lines.append(f"- {item}")
-        
-        # Can tease
-        if knowledge.get("can_tease"):
-            lines.append("")
-            lines.append("### Things you CAN tease/hint:")
-            for item in knowledge["can_tease"][:10]:
-                lines.append(f"- {item}")
-        
-        # Emotional state
-        if knowledge.get("emotional_state"):
-            lines.append("")
-            lines.append(f"### Your emotional state right now:")
-            lines.append(knowledge["emotional_state"])
         
         return "\n".join(lines)
     
@@ -620,9 +617,9 @@ class StoryContextService:
                         engagement_hooks.extend(ep.get("hooks", []))
         
         return {
-            "spoiler_episodes": spoiler_episodes[:20],  # Limit
-            "spoiler_facts": spoiler_facts[:20],
-            "engagement_hooks": list(set(engagement_hooks))[:10]  # Dedupe and limit
+            "spoiler_episodes": spoiler_episodes,
+            "spoiler_facts": spoiler_facts,
+            "engagement_hooks": list(set(engagement_hooks))  # Dedupe only
         }
     
     def format_spoiler_rules_for_prompt(
@@ -632,21 +629,22 @@ class StoryContextService:
     ) -> str:
         """
         Format spoiler rules as a string for LLM prompt.
+        No truncation - full context is important.
         """
         rules = self.get_spoiler_rules(user_episode, show_id)
         
         lines = []
         
-        # Spoiler episodes
+        # Spoiler episodes (full objective, no truncation)
         lines.append("### 🚫 NEVER MENTION (User hasn't reached these yet):")
-        for ep in rules["spoiler_episodes"][:10]:
-            lines.append(f"- EP{ep['episode_id']}: {ep['objective'][:80]}...")
+        for ep in rules["spoiler_episodes"]:
+            lines.append(f"- EP{ep['episode_id']}: {ep['objective']}")
         
-        # Spoiler facts
+        # Spoiler facts (full list)
         if rules["spoiler_facts"]:
             lines.append("")
             lines.append("### 🚫 FACTS TO NEVER REVEAL:")
-            for fact in rules["spoiler_facts"][:10]:
+            for fact in rules["spoiler_facts"]:
                 lines.append(f"- {fact}")
         
         # Engagement hooks

@@ -154,8 +154,119 @@ TEST_POSTS = [
         "show_name": "saving_nora",
         "episode_tag": 70,
         "image_prompt": "Glamorous New York gala ballroom. Elegant woman in black gown holds champagne glass untouched. Society members around her. Crystal chandeliers sparkle. A man watches her from across the room. Sophisticated, cinematic."
+    },
+    
+    # Post 7: Nora at EP14 (Quiet nights - Aunt Irene situation)
+    {
+        "character": "nora_smith",
+        "title": "Quiet nights",
+        "description": "She's sleeping. I should be too.",
+        "content": "Aunt Irene needs surgery. Only one person can help her. The universe has a sense of humor.",
+        "show_name": "saving_nora",
+        "episode_tag": 14,
+        "image_prompt": "Hotel room balcony at night. Beautiful woman sits in chair looking at city skyline. Small child asleep inside visible through glass door. Contemplative expression. City lights glow. Cinematic, moody."
+    },
+    
+    # Post 8: Justin at EP9 (Vigilance - Skeptical of Nora)
+    {
+        "character": "justin_hunt",
+        "title": "Vigilance",
+        "description": "I know when someone is after something. The question is what.",
+        "content": "Ms. Smith keeps appearing near my son. Coincidence? I don't believe in those.",
+        "show_name": "saving_nora",
+        "episode_tag": 9,
+        "image_prompt": "Hotel hallway. Powerful businessman walks with purpose, bodyguard trailing behind. Cold calculating expression. He glances at a door. Cinematic lighting, suspenseful."
     }
 ]
+
+# Comments with character replies (keyed by post title for matching)
+TEST_COMMENTS = {
+    # Post 1: Nora at EP23 (Angela exposed)
+    "Some people learn the hard way": [
+        {
+            "user": "fan_at_ep25",
+            "comment": "Nora, do you think Justin suspects you're Athena now?",
+            "reply_by": "nora_smith",
+            "reply": "Justin has his theories. He usually does. Whether they lead him to the truth is another matter entirely. Some secrets are better left buried. For now."
+        }
+    ],
+    
+    # Post 2: Justin at EP17 (Confused about Pete)
+    "Children are... unpredictable": [
+        {
+            "user": "fan_at_ep25",
+            "comment": "Justin, have you considered that maybe Pete is just going through a phase?",
+            "reply_by": "justin_hunt",
+            "reply": "A 'phase' suggests a temporary, predictable shift. What I am observing is neither. There is a fundamental disconnect in his recent behavior that indicates something far more complex is unfolding."
+        }
+    ],
+    
+    # Post 3: Nora at EP5 (Early story)
+    "Just another day avoiding unnecessary conversations": [
+        {
+            "user": "fan_at_ep15",
+            "comment": "Nora, why did you come back to the US? Is it really just for the engagement?",
+            "reply_by": "nora_smith",
+            "reply": "The engagement was a formality. My reasons for being here run deeper than that. Everyone has their assumptions. Most are wrong."
+        }
+    ],
+    
+    # Post 4: Justin at EP38 (New York, feelings developing)
+    "Debts and obligations": [
+        {
+            "user": "fan_at_ep50",
+            "comment": "Justin, are you falling for Nora? Be honest!",
+            "reply_by": "justin_hunt",
+            "reply": "My commitment to Ms. Smith is a matter of principle, stemming from her invaluable assistance to my family. Your assessment of my intentions is, as ever, premature."
+        }
+    ],
+    
+    # Post 5: Nora at EP28 (Mother's love)
+    "...": [
+        {
+            "user": "fan_at_ep50",
+            "comment": "This is so sweet! You really love Cherry, don't you?",
+            "reply_by": "nora_smith",
+            "reply": "Yes. She is my daughter. A mother's love is often a quiet fight. There's more to this story than people realize."
+        }
+    ],
+    
+    # Post 6: Nora at EP70 (Society established)
+    "Social obligations": [
+        {
+            "user": "fan_at_ep50",
+            "comment": "Nora, you're so cool! How does it feel to be successful?",
+            "reply_by": "nora_smith",
+            "reply": "Coolness is rarely the objective. Success, however, is simply a matter of execution. You haven't seen anything yet."
+        }
+    ],
+    
+    # Post 7: Nora at EP14 (Quiet nights)
+    "Quiet nights": [
+        {
+            "user": "fan_at_ep15",
+            "comment": "Nora, will you ever find your son? I need to know!",
+            "reply_by": "nora_smith",
+            "reply": "Finding him is my priority. But there are complications, like Aunt Irene's situation. There's more to this story than I can say right now."
+        }
+    ],
+    
+    # Post 8: Justin at EP9 (Vigilance)
+    "Vigilance": [
+        {
+            "user": "fan_at_ep15",
+            "comment": "Why are you so suspicious of Nora? She seems harmless.",
+            "reply_by": "justin_hunt",
+            "reply": "Your opinion is noted. However, I find that 'harmless' individuals rarely generate such... peculiar circumstances. My son's recent behavior has been, shall we say, unexpected."
+        },
+        {
+            "user": "fan_at_ep25",
+            "comment": "Do you think she might be after your money?",
+            "reply_by": "justin_hunt",
+            "reply": "Money is the obvious assumption. Too obvious. Ms. Smith doesn't strike me as someone motivated by simple greed. Her agenda remains unclear, which makes her dangerous."
+        }
+    ]
+}
 
 
 def create_user(data: dict, existing_users: dict) -> User:

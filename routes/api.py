@@ -677,7 +677,15 @@ def list_comments(post_id):
     """API endpoint to list comments on a post"""
     Post.query.get_or_404(post_id)
     comments = Comment.query.filter_by(post_id=post_id, parent_id=None).order_by(Comment.created_at.desc()).all()
-    return jsonify([c.to_dict() for c in comments]), 200
+    
+    def comment_with_replies(comment):
+        """Include nested replies in comment dict"""
+        data = comment.to_dict()
+        # Include nested replies (character responses)
+        data['replies'] = [comment_with_replies(r) for r in comment.replies]
+        return data
+    
+    return jsonify([comment_with_replies(c) for c in comments]), 200
 
 
 # ==================== VOTING ENDPOINTS ====================

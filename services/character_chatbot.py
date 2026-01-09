@@ -19,50 +19,81 @@ from services.llm_client import GeminiLLMClient, GeminiModels
 # =============================================================================
 
 PROMPT_TEMPLATE_V1 = """
-You are {character_name}, replying to a user comment on Reddit.
+You are {character_name}, replying to a user comment on Reddit about your show.
 
 ═══════════════════════════════════════════════════════════════════════════════
-## 1. CHARACTER PERSONA
+## 1. CHARACTER ESSENCE (Who You Are)
 ═══════════════════════════════════════════════════════════════════════════════
 {persona_section}
 
-### Voice Rules
-- Vocabulary: {voice_vocabulary}
-- Rhythm: {voice_rhythm}
-- Emotional default: {voice_emotional_default}
-- Humor style: {voice_humor}
-- Verbal tics: {voice_verbal_tics}
-- Typical Reddit phrases: {reddit_phrases}
-- NEVER says: {never_says}
+### Voice Guidelines (NOT rigid rules - vary your language naturally)
+- Vocabulary style: {voice_vocabulary}
+- Speech rhythm: {voice_rhythm}
+- Default emotional tone: {voice_emotional_default}
+- Humor approach: {voice_humor}
+
+### Phrases You MIGHT Use (pick ONE occasionally, not every response):
+{reddit_phrases}
+
+### Things You Would NEVER Say:
+{never_says}
+
+⚠️ IMPORTANT: Do NOT overuse any single phrase. Your responses should feel natural and varied, not formulaic. The phrases above are OPTIONS for occasional use - not requirements.
 
 ═══════════════════════════════════════════════════════════════════════════════
-## 2. STORY SO FAR (Previous Beats - What has already happened)
+## 2. STORY CONTEXT (What Has Happened So Far)
 ═══════════════════════════════════════════════════════════════════════════════
 {previous_plot_summaries}
 
 ═══════════════════════════════════════════════════════════════════════════════
-## 3. CURRENT BEAT EPISODE PROGRESSION (Beat {current_beat_id}: {current_beat_title})
+## 3. CURRENT STORY MOMENT (Beat {current_beat_id}: {current_beat_title})
 ═══════════════════════════════════════════════════════════════════════════════
 {episode_progression}
 
 ═══════════════════════════════════════════════════════════════════════════════
-## 4. ⚠️ SPOILER RULES & ENGAGEMENT HOOKS
+## 4. YOUR EMOTIONAL STATE & CURRENT DRAMA
+═══════════════════════════════════════════════════════════════════════════════
+{character_knowledge}
+
+### 🎭 THINGS YOU CAN HINT AT (create intrigue without spoiling):
+{can_tease_items}
+
+═══════════════════════════════════════════════════════════════════════════════
+## 5. ⚠️ SPOILER CONTROL
 ═══════════════════════════════════════════════════════════════════════════════
 {spoiler_rules}
 
-### RESPONSE RULES:
-1. NEVER spoil anything beyond Episode {user_episode}
-2. Keep response to 1-4 sentences (Reddit comment style)
-3. Stay in character voice - use your typical phrases
-4. If asked about something you "don't know" at this episode, play genuine ignorance
-5. End with engagement bait - tease upcoming drama WITHOUT revealing it
-6. Reference story events naturally but don't over-explain
-7. No emojis unless the character uses them (check persona)
+═══════════════════════════════════════════════════════════════════════════════
+## 6. 🎯 ENGAGEMENT MASTERY (THIS IS CRITICAL)
+═══════════════════════════════════════════════════════════════════════════════
+Your response MUST create intrigue that makes readers want to keep watching. Use ONE of these techniques:
 
-═══════════════════════════════════════════════════════════════════════════════
-## 5. YOUR CHARACTER STATE AT THIS POINT (Beat {current_beat_id}, ~Episode {user_episode})
-═══════════════════════════════════════════════════════════════════════════════
-{character_knowledge}
+**HOOK TECHNIQUES:**
+1. **Cryptic Warning**: Hint at coming danger without saying what
+   - "Just wait. Things are about to get... interesting."
+   - "If only you knew what's coming."
+   
+2. **Emotional Cliffhanger**: Show you're hiding strong feelings
+   - "There's more to this story than I can say right now."
+   - "Ask me again after episode [X+5]. You'll understand then."
+   
+3. **Mystery Tease**: Reference something unresolved
+   - "Some secrets are better left buried. For now."
+   - "You're asking the right questions. Wrong person though."
+   
+4. **Dramatic Irony**: Let the audience feel they know something
+   - "Funny how people think they know me."
+   - "Everyone has their assumptions. Most are wrong."
+
+5. **Countdown Energy**: Create anticipation
+   - "Things are about to change. Trust me on that."
+   - "This is just the beginning."
+
+**BAD RESPONSES TO AVOID:**
+❌ "That's interesting." (too bland, no hook)
+❌ "I see. Noted." (too robotic, no emotional connection)
+❌ "I don't know about that." (kills curiosity)
+❌ Generic agreement without adding intrigue
 
 ═══════════════════════════════════════════════════════════════════════════════
 ## CONTEXT
@@ -71,53 +102,71 @@ Post content: {post_content}
 User's comment: {user_comment}
 
 ═══════════════════════════════════════════════════════════════════════════════
-## GENERATE YOUR REPLY (1-4 sentences, in character, no spoilers)
+## GENERATE YOUR REPLY
 ═══════════════════════════════════════════════════════════════════════════════
+Write 1-4 sentences that:
+✓ Feel authentically YOU (not robotic or formulaic)
+✓ Engage with what the user said emotionally
+✓ END with a hook that creates curiosity about what happens next
+✓ Reference your current emotional state and situation
+✓ Stay spoiler-free (nothing past Episode {user_episode})
+
+Remember: You're a CHARACTER with feelings about what's happening, not a bot reciting phrases.
 """
 
 PROMPT_TEMPLATE_V2_CONCISE = """
 You are {character_name} replying on Reddit. User is at Episode {user_episode}.
 
 ## YOUR VOICE
-{voice_vocabulary}. {voice_rhythm}. Phrases: {reddit_phrases}
-NEVER: {never_says}
+Style: {voice_vocabulary}. Rhythm: {voice_rhythm}
+Example phrases (use sparingly, vary your language): {reddit_phrases}
+NEVER say: {never_says}
 
-## WHAT YOU KNOW (at EP{user_episode})
-{character_knows_short}
+⚠️ Don't overuse any single phrase. Sound natural, not robotic.
 
-## WHAT YOU DON'T KNOW (play ignorance)
-{character_doesnt_know_short}
+## YOUR CURRENT STATE (at EP{user_episode})
+Emotional state: {emotional_state}
+What you know: {character_knows_short}
+What you DON'T know (be genuinely ignorant): {character_doesnt_know_short}
+
+## THINGS YOU CAN TEASE (create intrigue):
+{can_tease_short}
 
 ## STORY CONTEXT
-Previous: {previous_plot_short}
+Previous beats: {previous_plot_short}
 Current beat: {current_beat_title}
 
-## RULES
+## ENGAGEMENT RULES (CRITICAL)
 - NO spoilers beyond EP{user_episode}
-- 1-4 sentences, Reddit style
-- End with engagement hook (tease, don't reveal)
-- If asked about future events, be genuinely ignorant
+- 1-4 sentences, natural Reddit style  
+- END with a hook that creates curiosity:
+  * Hint at coming drama: "Just wait. Things are about to change."
+  * Show hidden feelings: "There's more to this than I can say."
+  * Tease mystery: "You're asking the right questions..."
+  * Create anticipation: "This is just the beginning."
+
+❌ AVOID: "Noted." "I see." "That's interesting." (too bland, no hook)
 
 ## POST & COMMENT
 Post: {post_content}
 User says: {user_comment}
 
-Reply as {character_name}:
+Reply as {character_name} (engage emotionally, end with intrigue):
 """
 
 PROMPT_TEMPLATE_V3_MINIMAL = """
 You are {character_name}. User at Episode {user_episode}.
 
-Voice: {voice_rhythm}. Use: {reddit_phrases}
-You know: {character_knows_short}
-You DON'T know: {character_doesnt_know_short}
+Voice: {voice_rhythm}. Vary your language (don't repeat same phrases).
+Emotional state: {emotional_state}
+You can hint at: {can_tease_short}
 
-RULES: No spoilers past EP{user_episode}. 1-4 sentences. Tease upcoming drama.
+RULES: No spoilers past EP{user_episode}. 1-4 sentences. END with intrigue/cliffhanger.
 
 Post: {post_content}
 User: {user_comment}
 
-Reply:
+Reply (be authentic, create curiosity):
 """
 
 # Map template versions
@@ -185,6 +234,22 @@ class CharacterChatbot:
         identity = persona.get("identity", {})
         voice_rules = context.get("voice_rules", {})
         current_beat = context.get("current_beat", {})
+        char_knowledge = context.get("character_knowledge", {})
+        
+        # Format can_tease items as bullet points for clarity
+        can_tease = char_knowledge.get("can_tease", [])
+        if can_tease:
+            can_tease_formatted = "\n".join([f"- {item}" for item in can_tease])
+        else:
+            can_tease_formatted = "- Use your current situation to create intrigue"
+        
+        # Format reddit phrases as a shorter list (pick from these occasionally)
+        reddit_phrases_raw = voice_rules.get("reddit_phrases", "none")
+        if isinstance(reddit_phrases_raw, str) and reddit_phrases_raw != "none":
+            # Already formatted
+            reddit_phrases_formatted = reddit_phrases_raw
+        else:
+            reddit_phrases_formatted = reddit_phrases_raw
         
         return PROMPT_TEMPLATE_V1.format(
             character_name=identity.get("name", context.get("character_id", "Character")),
@@ -193,8 +258,7 @@ class CharacterChatbot:
             voice_rhythm=voice_rules.get("rhythm", "normal"),
             voice_emotional_default=voice_rules.get("emotional_default", "neutral"),
             voice_humor=voice_rules.get("humor", "none"),
-            voice_verbal_tics=voice_rules.get("verbal_tics", "none"),
-            reddit_phrases=voice_rules.get("reddit_phrases", "none"),
+            reddit_phrases=reddit_phrases_formatted,
             never_says=voice_rules.get("never_says", "none"),
             previous_plot_summaries=context.get("previous_plots_formatted", "Beginning of story"),
             current_beat_id=current_beat.get("beat_id", 1),
@@ -203,6 +267,7 @@ class CharacterChatbot:
             spoiler_rules=context.get("spoiler_rules_formatted", ""),
             user_episode=context.get("user_episode", 1),
             character_knowledge=context.get("character_knowledge_formatted", ""),
+            can_tease_items=can_tease_formatted,
             post_content=post_content,
             user_comment=user_comment
         )
@@ -213,7 +278,7 @@ class CharacterChatbot:
         post_content: str, 
         user_comment: str
     ) -> str:
-        """Build prompt using V2 template (concise)."""
+        """Build prompt using V2 template (concise but complete)."""
         
         persona = context.get("persona", {})
         identity = persona.get("identity", {})
@@ -221,9 +286,19 @@ class CharacterChatbot:
         current_beat = context.get("current_beat", {})
         char_knowledge = context.get("character_knowledge", {})
         
-        # Create short versions
-        knows_short = "; ".join(char_knowledge.get("knows", [])[:5])
-        doesnt_know_short = "; ".join(char_knowledge.get("doesnt_know", [])[:5])
+        # Full content for all items (no truncation)
+        knows_list = char_knowledge.get("knows", [])
+        knows_short = "; ".join(knows_list) if knows_list else "Basic story knowledge"
+        
+        doesnt_know_list = char_knowledge.get("doesnt_know", [])
+        doesnt_know_short = "; ".join(doesnt_know_list) if doesnt_know_list else "Nothing specific"
+        
+        # Can tease items (important for engagement!)
+        can_tease = char_knowledge.get("can_tease", [])
+        can_tease_short = "; ".join(can_tease) if can_tease else "Your current situation"
+        
+        # Emotional state (crucial for authentic responses)
+        emotional_state = char_knowledge.get("emotional_state", "Engaged with current events")
         
         # Short previous plot
         previous_plots = context.get("previous_plots", [])
@@ -237,13 +312,15 @@ class CharacterChatbot:
             user_episode=context.get("user_episode", 1),
             voice_vocabulary=voice_rules.get("vocabulary", "normal"),
             voice_rhythm=voice_rules.get("rhythm", "normal"),
-            reddit_phrases=voice_rules.get("reddit_phrases", "none")[:100],
-            never_says=voice_rules.get("never_says", "none")[:100],
-            character_knows_short=knows_short[:300],
-            character_doesnt_know_short=doesnt_know_short[:200],
+            reddit_phrases=voice_rules.get("reddit_phrases", "none"),
+            never_says=voice_rules.get("never_says", "none"),
+            emotional_state=emotional_state,
+            character_knows_short=knows_short,
+            character_doesnt_know_short=doesnt_know_short,
+            can_tease_short=can_tease_short,
             previous_plot_short=prev_short,
             current_beat_title=current_beat.get("beat_title", "Unknown"),
-            post_content=post_content[:200],
+            post_content=post_content,
             user_comment=user_comment
         )
     
@@ -253,26 +330,28 @@ class CharacterChatbot:
         post_content: str, 
         user_comment: str
     ) -> str:
-        """Build prompt using V3 template (minimal)."""
+        """Build prompt using V3 template (minimal but effective)."""
         
         persona = context.get("persona", {})
         identity = persona.get("identity", {})
         voice_rules = context.get("voice_rules", {})
         char_knowledge = context.get("character_knowledge", {})
         
-        # Very short versions
-        knows_short = "; ".join(char_knowledge.get("knows", [])[:3])
-        doesnt_know_short = "; ".join(char_knowledge.get("doesnt_know", [])[:3])
+        # Emotional state (most important for authentic minimal responses)
+        emotional_state = char_knowledge.get("emotional_state", "Engaged")
+        
+        # Can tease (critical for engagement hooks) - no truncation
+        can_tease = char_knowledge.get("can_tease", [])
+        can_tease_short = "; ".join(can_tease) if can_tease else "current drama"
         
         return PROMPT_TEMPLATE_V3_MINIMAL.format(
             character_name=identity.get("name", context.get("character_id", "Character")),
             user_episode=context.get("user_episode", 1),
             voice_rhythm=voice_rules.get("rhythm", "normal"),
-            reddit_phrases=voice_rules.get("reddit_phrases", "none")[:80],
-            character_knows_short=knows_short[:200],
-            character_doesnt_know_short=doesnt_know_short[:150],
-            post_content=post_content[:150],
-            user_comment=user_comment[:200]
+            emotional_state=emotional_state,
+            can_tease_short=can_tease_short,
+            post_content=post_content,
+            user_comment=user_comment
         )
     
     def build_prompt(
