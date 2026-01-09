@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "name": "NORA SMITH",
+    "scope": "EP001-100"
+  },
+  "raw_sections": {
+    "NORA SMITH \u2022 JUSTIN HUNT \u2022 HENRY SMITH": [],
+    "NORA SMITH": [
+      "HIGH: Core personality traits, voice patterns, family relationships, professional abilities",
+      "HIGH: Dialogue style, response patterns, emotional triggers",
+      "MEDIUM: Full extent of Imperial League membership details",
+      "LOW: Backstory before coma, how she developed various skills"
+    ]
+  }
+}

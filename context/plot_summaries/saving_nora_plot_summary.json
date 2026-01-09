@@ -1,0 +1,213 @@
+{
+  "meta": {
+    "show_id": "saving_nora",
+    "title": "Saving Nora",
+    "version": "1.0",
+    "total_episodes": 100,
+    "total_beats": 8,
+    "source": "Plot_Subplot_Summary.docx",
+    "purpose": "beat_level_narrative_summaries"
+  },
+
+  "overall_logline": "A brilliant surgeon wakes from a 5-year coma to discover her twin babies were separated at birth—her daughter stayed with her, but her son was taken by his powerful father who doesn't know she exists.",
+
+  "beats": [
+    {
+      "beat_id": 1,
+      "title": "Homecoming",
+      "start_episode": 1,
+      "end_episode": 8,
+      
+      "start": "Nora Smith returns to the United States after five years abroad. Officially, she's here to cancel her unwanted engagement to Anthony Gray. Secretly, she's searching for the son who was taken from her at birth by her own father Henry. She arrives at Hotel Finest with her daughter Cherry, unaware that her lost son Pete is living in the suite next door with his father Justin Hunt—the most powerful man in the country.",
+      
+      "mid": "Nora confronts her hostile family at Angela's party, refusing to surrender her pharmaceutical company as a 'wedding gift.' She discovers Justin Hunt is desperately searching for a legendary surgeon called 'Athena'—which happens to be Nora's secret identity. Through a series of hotel encounters, the five-year-old twins begin interacting without knowing they're siblings. Pete, starved of maternal affection, becomes fixated on Nora after she accidentally kisses him thinking he's Cherry. Meanwhile, Nora uses her hacker alias to investigate her company and contacts her old network for intel on her son's whereabouts.",
+      
+      "end": "At a hotel restaurant, the twins accidentally swap places. Nora feeds Pete thinking he's Cherry. Justin picks up Cherry thinking she's Pete. Neither parent realizes the switch. Pete experiences a mother's love for the first time and asks 'Are you my mommy?' Cherry discovers she finally has a father. The beat ends with each twin in the wrong household, and neither parent aware of the deception that will define the next hundred episodes."
+    },
+    {
+      "beat_id": 2,
+      "title": "The Switch Begins",
+      "start_episode": 9,
+      "end_episode": 20,
+      
+      "start": "The accidental swap continues as Cherry adapts to Justin's strict household while Pete enjoys Nora's warmth. Chester, Justin's assistant and gaming friend to Cherry, discovers his online teammate 'sweetcherry' is a child who looks exactly like Pete—creating the first crack in the deception. Nora is lured to a bar by Angela, who claims to have information about her son.",
+      
+      "mid": "At the bar, Anthony's romantic gesture accidentally targets Nora instead of Angela, publicly humiliating Angela. Nora forces information from Angela and learns that Henry—not Angela—holds the key to finding her son. She discovers her Aunt Irene has a brain tumor that only 'Athena' can operate on. Cherry reports Pete's tutor abuse to Justin, who fires both tutors and apologizes to his 'son' for the first time. In a hotel stairwell, Pete and Cherry finally meet face-to-face, realize they're twins, and form a plan: switch places deliberately to make their parents fall in love.",
+      
+      "end": "The twins execute their first coordinated switch. They arrange a movie 'date' for their parents, but it backfires—Justin accuses Nora of stalking him, and a moviegoer mistakes them for a bickering married couple. The beat ends with the twins' scheme officially underway, but their parents more hostile than ever. The plan to unite the family has begun, but success seems far away."
+    },
+    {
+      "beat_id": 3,
+      "title": "Athena's Surgery",
+      "start_episode": 21,
+      "end_episode": 30,
+      
+      "start": "The disastrous movie date fallout continues as Justin's suspicion of Nora intensifies. Angela lies to the medical community, claiming she personally contacted the legendary Dr. Athena to operate on Irene. Nora prepares to perform the surgery secretly while Angela plans to take credit.",
+      
+      "mid": "Nora operates on Aunt Irene as Athena, publicly exposing Angela's lie mid-surgery and getting her expelled from the observation room. The seven-hour surgery succeeds. Justin locks down the hospital floor to catch Athena, but Nora escapes during the commotion by staying behind to do her own sutures. Justin develops a theory: 'The third possibility is that Nora Smith is Athena.' The twins nearly get caught when Justin finds Cherry at Nora's door, but Pete disappears just in time. Nora performs an emergency surgery on Simon Anderson in public, saving his life but exposing her medical abilities to witnesses.",
+      
+      "end": "Irene recovers and now knows Nora is Athena—giving Nora her first true ally with full knowledge of her secret. Justin's suspicion is planted but not confirmed. The Anderson family begins searching for the mysterious surgeon who saved Simon. Multiple threads are now pulling toward revelation, but Nora's identity remains protected—for now."
+    },
+    {
+      "beat_id": 4,
+      "title": "New York Journey",
+      "start_episode": 31,
+      "end_episode": 45,
+      
+      "start": "Crisis strikes the Hunt family: Justin's grandmother collapses from a brain hemorrhage and Pete is falsely accused of pushing her. Howard and the Hunt elders demand Pete be expelled from the family. Justin has one week to prove his son's innocence, but only Athena can save the grandmother—and only the grandmother can testify to Pete's innocence.",
+      
+      "mid": "Cherry reveals to Pete that their mother is the legendary Dr. Athena, giving them hope. Nora offers to help, but Lawrence dismisses her—until Melissa Anderson recognizes her as the woman who saved her husband Simon. Justin accepts Nora's help with a condition she sets: in exchange for the surgery, he must help her find her lost son. They travel to New York together. Nora meets the Anderson family and discovers her mother was 'the most talented woman in New York,' engaged to Ian Smith before mysteriously disappearing. Quinn, a martial arts master, recognizes Pete as Nora's son and accepts him as a student without revealing the secret.",
+      
+      "end": "Nora performs successful brain surgery on Justin's grandmother at the Hunt estate. The grandmother will recover and can testify that Pete is innocent. The Hunt family now owes Nora a significant debt. More importantly, Nora and Justin's relationship has transformed—from hostile strangers to something approaching genuine respect and the first hints of attraction."
+    },
+    {
+      "beat_id": 5,
+      "title": "Secrets and Revelations",
+      "start_episode": 46,
+      "end_episode": 60,
+      
+      "start": "With the grandmother saved, Nora navigates New York high society while managing her multiple secret identities. Quinn confirms to Pete that he knows the truth—Pete is Nora's son—but agrees to keep the secret. The twins continue their scheme with a new ally who understands the stakes.",
+      
+      "mid": "Nora learns more about her mother's legendary status in New York and her engagement to Ian Smith, head of the New York Smith family. The company name 'Idealian' is revealed to contain 'Ian'—connecting to her mother's past love. Ian Smith himself is revealed to be dying, adding urgency to understanding this history. Nora introduces her mother's Carefree Pills formula to the pharmaceutical market, achieving massive success at auction and raising her profile significantly. Justin continues helping with the son search per their deal, while his feelings for Nora deepen.",
+      
+      "end": "Nora's status in New York is established. She has wealth from the Carefree Pills, respect from both the Anderson and Hunt families, and a growing connection with Justin. But the core mysteries remain: she doesn't know Pete is her son, Justin doesn't know about Athena or Cherry, and her mother's full story is still hidden. The pieces are in place for eventual revelation, but the secrets hold."
+    },
+    {
+      "beat_id": 6,
+      "title": "Society Games",
+      "start_episode": 61,
+      "end_episode": 75,
+      
+      "start": "Nora's pharmaceutical success draws attention from New York's elite. Jon Myers, a renowned doctor, attempts to take her as a student—not knowing she far surpasses his abilities. The twins continue coordinating their lives between two households while Cherry begins exploring her gaming talents publicly.",
+      
+      "mid": "Nora rejects Jon Myers as a teacher, subtly revealing she's already beyond his skill level. Ian Smith's condition worsens, creating pressure around his connection to Nora's mother. Joel Smith and other New York family members are introduced, expanding the web of relationships. Justin demonstrates his growing feelings through increasingly obvious gestures—a Ferrari gift, arranging situations to spend time with Nora. Chester helps Cherry begin her streaming career, introducing her to the gaming community.",
+      
+      "end": "Nora has rejected those who underestimate her, strengthened her alliances, and continued building her life in New York. Justin's pursuit has become undeniable, though Nora maintains her characteristic detachment. Ian Smith's failing health looms as an unresolved thread connecting to Nora's mother's past. The family is functioning across two households, with the twins managing their double lives successfully."
+    },
+    {
+      "beat_id": 7,
+      "title": "Dance and Drama",
+      "start_episode": 76,
+      "end_episode": 90,
+      
+      "start": "Society events bring new challenges as Nora is expected to participate in high-profile gatherings. Her multiple hidden talents—surgeon, hacker, martial artist—now face potential exposure in the spotlight of New York's elite social scene.",
+      
+      "mid": "At a society dance event, Nora surprises everyone with unexpected skill, adding yet another dimension to her mysterious capabilities. Tanya Turner becomes a connection in this world. Cherry's gaming livestream career gains momentum with Chester's help, building her own identity separate from the twin scheme. Family events and rivalries emerge, with speculation growing about who might become Mrs. Hunt. The twins face new logistics challenges as their separate lives become more complex.",
+      
+      "end": "Nora has demonstrated she belongs in any arena—medical, social, physical. Justin's interest is now obvious to observers. The kindergarten celebration approaches, promising a convergence of the various plotlines. Cherry has established herself in the gaming world while Pete has grown under Quinn's training. The family, though still divided by secrets, is functioning more cohesively than ever."
+    },
+    {
+      "beat_id": 8,
+      "title": "Kindergarten and Business",
+      "start_episode": 91,
+      "end_episode": 100,
+      
+      "start": "The twins face kindergarten challenges: Cherry must navigate dance politics and a challenge from Brandon Smith who demands she 'become a boy or be his sidekick.' The twins see this as an opportunity—Pete can simply attend as Cherry. Meanwhile, Justin's business decisions increasingly reflect his personal feelings for Nora.",
+      
+      "mid": "Justin rejects a billion-dollar deal because his mood—tied to concerns about 'Pete'—isn't right. Cherry wins the center position in the kindergarten dance after her teacher's husband faces business pressure. Brandon's challenge is accepted, with the twins planning to swap so Pete can win. Cherry's streaming career continues growing. Nora shares Justin's economic predictions with the Andersons, proving the value of her connection to him. The twins help each other with homework and schemes, their coordination now seamless.",
+      
+      "end": "Justin invites Nora to dinner, openly pursuing a romantic relationship. He tricks Pete about Italian food preferences, showing playful engagement with his 'son.' The beat—and the first hundred episodes—end with the romantic relationship actively developing, the twins' scheme still undiscovered, and multiple revelations poised to occur. The family is closer than ever to unity, but the foundational secrets remain: Pete's identity, Cherry's existence, and Nora's full truth are all still hidden from those who most need to know."
+    }
+  ],
+
+  "main_arcs": [
+    {
+      "arc_id": "finding_lost_son",
+      "title": "Finding the Lost Son",
+      "summary": "Nora's primary mission is finding the son taken from her at birth. Her father Henry orchestrated the separation, lying that the baby died. Unknown to Nora, her son Pete has been raised by Justin Hunt, and through the accidental twin swap, she's actually been mothering him without knowing his true identity.",
+      "status_at_ep100": "readers_know_parents_unaware",
+      "key_beats": [1, 2, 4]
+    },
+    {
+      "arc_id": "nora_justin_romance",
+      "title": "Nora and Justin's Relationship",
+      "summary": "From hostile strangers to lovers. Their relationship transforms through forced proximity, mutual respect earned through crisis, and undeniable attraction despite both trying to resist.",
+      "status_at_ep100": "active_courtship",
+      "key_beats": [1, 3, 4, 8]
+    },
+    {
+      "arc_id": "athena_identity",
+      "title": "Nora's Secret Identity as Athena",
+      "summary": "Justin desperately hunts for Dr. Athena to save his grandmother, not knowing Athena is Nora. The dramatic irony builds as he gets closer to the truth while falling for her.",
+      "status_at_ep100": "suspected_not_confirmed",
+      "key_beats": [1, 3, 4, 5]
+    },
+    {
+      "arc_id": "twin_scheme",
+      "title": "The Twin Swap Scheme",
+      "summary": "After accidentally swapping, the twins discover each other and deliberately continue switching to unite their parents. Their coordination becomes increasingly sophisticated.",
+      "status_at_ep100": "ongoing_undiscovered",
+      "key_beats": [1, 2, 7, 8]
+    }
+  ],
+
+  "subplots": [
+    {
+      "subplot_id": "idealian_company",
+      "title": "Idealian Pharmaceuticals Dispute",
+      "status": "unresolved",
+      "beats_active": [1, 2, 5]
+    },
+    {
+      "subplot_id": "tutor_abuse",
+      "title": "Pete's Tutor Abuse",
+      "status": "resolved",
+      "resolution_beat": 2,
+      "resolution": "Cherry exposes abuse, tutors fired"
+    },
+    {
+      "subplot_id": "irene_tumor",
+      "title": "Aunt Irene's Brain Tumor",
+      "status": "resolved",
+      "resolution_beat": 3,
+      "resolution": "Nora operates as Athena, saves Irene"
+    },
+    {
+      "subplot_id": "grandmother_surgery",
+      "title": "Hunt Grandmother's Surgery",
+      "status": "resolved",
+      "resolution_beat": 4,
+      "resolution": "Nora saves grandmother, proves Pete's innocence"
+    },
+    {
+      "subplot_id": "ian_smith_illness",
+      "title": "Ian Smith's Illness",
+      "status": "unresolved",
+      "beats_active": [5, 6]
+    },
+    {
+      "subplot_id": "carefree_pills",
+      "title": "Carefree Pills Launch",
+      "status": "resolved",
+      "resolution_beat": 5,
+      "resolution": "Successful auction, Nora's wealth established"
+    },
+    {
+      "subplot_id": "brandon_challenge",
+      "title": "Brandon's Challenge",
+      "status": "pending",
+      "beats_active": [8]
+    }
+  ],
+
+  "series_status_at_ep100": {
+    "resolved": [
+      "Tutor abuse ended",
+      "Hunt grandmother saved", 
+      "Angela publicly humiliated",
+      "Nora established in New York society",
+      "Carefree Pills successfully launched"
+    ],
+    "unresolved": [
+      "Twin identities not revealed to parents",
+      "Nora doesn't know Pete is her son",
+      "Justin doesn't know Nora is Athena",
+      "Justin doesn't know Cherry exists",
+      "Ian Smith's illness and connection to Nora's mother",
+      "Full truth of what happened 5 years ago",
+      "Brandon challenge pending"
+    ],
+    "romantic_status": "Active courtship - dinner date planned",
+    "twin_scheme_status": "Successfully ongoing, undiscovered"
+  }
+}

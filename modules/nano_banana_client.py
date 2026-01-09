@@ -121,7 +121,7 @@ class NanoBananaClient:
 
             config = self.nano_banana_config
             if model_id is None:
-                model_id = "gemini-2.5-flash-image"
+                model_id = "gemini-3-pro-image-preview"
 
             # For Gemini models, some locations might need to be "us" instead of "us-central1"
             # Try "us" first as it's the default for many Gemini models

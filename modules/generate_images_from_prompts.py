@@ -185,7 +185,7 @@ def generate_images_from_prompts():
         print(f"\n   Image {i}/{len(prompts)}")
         print(f"   Episode: {episode}")
         print(f"   Perspective: {perspective}")
-        print(f"   Prompt: {prompt_text[:100]}...")
+        print(f"   Prompt: {prompt_text}...")
         
         try:
             # Generate image

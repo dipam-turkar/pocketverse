@@ -1,0 +1,1189 @@
+{
+  "meta": {
+    "show_id": "saving_nora",
+    "title": "Saving Nora",
+    "version": "1.0",
+    "total_episodes": 100,
+    "purpose": "episode_level_tracking_spoiler_control",
+    "source": "saving_nora_beat_analysis.md"
+  },
+
+  "chapters": [
+    {
+      "beat_id": 1,
+      "beat_title": "Homecoming",
+      "episode_range": {"start": 1, "end": 8},
+      "episodes": [
+        {
+          "episode_id": 1,
+          "beat_id": 1,
+          "objective": "Nora returns to US to find her son while officially canceling engagement",
+          "what_changes": [
+            "Nora reveals she's searching for twin taken at birth",
+            "Establishes she was pregnant mysteriously 5 years ago",
+            "Justin's hunt for Athena established"
+          ],
+          "new_constraints": [
+            "Her father tried to take both babies; she barely saved Cherry",
+            "Justin Hunt is searching for 'Athena' (Nora's secret identity)"
+          ],
+          "cliffhanger": "Nora spots Anthony at airport; Justin's pursuit of Athena established",
+          "facts_revealed": [
+            {"fact": "nora_has_lost_son", "known_by": ["reader", "nora"]},
+            {"fact": "nora_is_athena", "known_by": ["reader"]},
+            {"fact": "justin_hunting_athena", "known_by": ["reader", "justin"]},
+            {"fact": "cherry_exists", "known_by": ["reader", "nora"]}
+          ],
+          "hooks": ["Will Nora find her son?", "Will Justin catch Athena?"],
+          "evidence": "Her real mission, the most important thing, was to find her other child"
+        },
+        {
+          "episode_id": 2,
+          "beat_id": 1,
+          "objective": "Navigate arrival; avoid Anthony; reach hotel",
+          "what_changes": [
+            "Nora checks into presidential suite at Hotel Finest",
+            "Mistakenly kisses Pete (thinking he's Cherry)"
+          ],
+          "new_constraints": [
+            "Justin Hunt stays next door",
+            "Pete develops attachment to Nora after mistaken kiss"
+          ],
+          "cliffhanger": "Pete's reaction to kiss; Justin watching Nora",
+          "facts_revealed": [
+            {"fact": "pete_exists", "known_by": ["reader"]},
+            {"fact": "pete_yearns_for_mother", "known_by": ["reader"]}
+          ],
+          "hooks": ["Pete felt something from Nora's touch"],
+          "evidence": "Pete staring in direction of elevator; soft hug and kiss made him blush uncontrollably"
+        },
+        {
+          "episode_id": 3,
+          "beat_id": 1,
+          "objective": "Attend Angela's party to formalize engagement cancellation",
+          "what_changes": [
+            "Nora confronts Angela's bullying of Lisa",
+            "Reveals her transformed appearance",
+            "Refuses to give company to Angela"
+          ],
+          "new_constraints": [
+            "Father demands company as 'wedding gift' to Angela",
+            "Family hostility confirmed"
+          ],
+          "cliffhanger": "Nora refuses company transfer; leaves family home",
+          "facts_revealed": [
+            {"fact": "nora_transformed_appearance", "known_by": ["reader", "smith_family"]},
+            {"fact": "henry_wants_company", "known_by": ["reader", "nora", "smith_family"]}
+          ],
+          "hooks": ["How will Nora get information about her son?"],
+          "evidence": "Her father, Henry Smith, strode into the room; 'No' to company transfer"
+        },
+        {
+          "episode_id": 4,
+          "beat_id": 1,
+          "objective": "Return to hotel; begin information gathering",
+          "what_changes": [
+            "Justin confronts Nora in hotel lobby",
+            "Justin is searching for 'Athena'",
+            "Nora contacts Solo for intel on Idealian Pharmaceuticals"
+          ],
+          "new_constraints": [
+            "Justin's surveillance of Athena begins",
+            "Nora's company is valuable (suspicious activity)"
+          ],
+          "cliffhanger": "Justin receives photo of Athena; Chester believes Nora is pursuing Justin",
+          "facts_revealed": [
+            {"fact": "justin_hostile_to_nora", "known_by": ["reader", "nora", "justin"]},
+            {"fact": "nora_has_hacker_network", "known_by": ["reader"]}
+          ],
+          "hooks": ["Will Justin recognize Athena?"],
+          "evidence": "Find her! Justin orders; Solo sends company information"
+        },
+        {
+          "episode_id": 5,
+          "beat_id": 1,
+          "objective": "Avoid Justin's attention; research company",
+          "what_changes": [
+            "Justin sees Athena photo (Nora in surgical gear, unrecognizable)",
+            "Pete calls neighboring room, connects with Cherry"
+          ],
+          "new_constraints": [
+            "Chester moves Nora to different room",
+            "Justin intensifies Athena search"
+          ],
+          "cliffhanger": "Nora moved downstairs; Pete and Cherry begin phone friendship",
+          "facts_revealed": [
+            {"fact": "twins_can_contact_each_other", "known_by": ["reader"]},
+            {"fact": "athena_photo_exists", "known_by": ["reader", "justin"]}
+          ],
+          "hooks": ["The twins are connecting without knowing who they are"],
+          "evidence": "That photo of Athena reviewed; Nora moved to 38th floor"
+        },
+        {
+          "episode_id": 6,
+          "beat_id": 1,
+          "objective": "Extract information about son from Anthony",
+          "what_changes": [
+            "Nora meets Anthony as 'Isabel Anderson'",
+            "Learns Henry handled baby situation",
+            "Anthony knows nothing useful"
+          ],
+          "new_constraints": [
+            "Anthony is pursuing 'Isabel' (doesn't recognize Nora)",
+            "Cherry plays games with mystery child (Pete)"
+          ],
+          "cliffhanger": "Anthony obsessed with 'Isabel'; Cherry/Pete gaming connection",
+          "facts_revealed": [
+            {"fact": "henry_handled_baby", "known_by": ["reader", "nora"]},
+            {"fact": "anthony_doesnt_recognize_nora", "known_by": ["reader"]}
+          ],
+          "hooks": ["Henry is the key to finding her son"],
+          "evidence": "Uncle Henry was the one who handled all that; Cherry playing with unknown child"
+        },
+        {
+          "episode_id": 7,
+          "beat_id": 1,
+          "objective": "Manage Cherry; avoid further complications",
+          "what_changes": [
+            "Nora takes Cherry to dinner",
+            "Pete sneaks down",
+            "Both twins wearing gray Gucci suits creates confusion"
+          ],
+          "new_constraints": [
+            "The twins look identical",
+            "Justin hunting for Pete"
+          ],
+          "cliffhanger": "Cherry goes to restaurant; Pete also there",
+          "facts_revealed": [
+            {"fact": "twins_look_identical", "known_by": ["reader"]}
+          ],
+          "hooks": ["The twins are about to cross paths"],
+          "evidence": "Cherry in little gray Gucci suit; Pete spotted the limited-edition gray Gucci suit"
+        },
+        {
+          "episode_id": 8,
+          "beat_id": 1,
+          "objective": "Have dinner with Cherry",
+          "what_changes": [
+            "MAJOR MIX-UP: Nora feeds Pete (thinking he's Cherry)",
+            "Justin picks up Cherry (thinking she's Pete)",
+            "Twins are separated with wrong parents"
+          ],
+          "new_constraints": [
+            "Justin forbids 'Pete' from seeing Nora",
+            "Pete experiences mother's affection for first time"
+          ],
+          "cliffhanger": "Cherry with Justin; Pete with Nora; neither parent aware",
+          "facts_revealed": [
+            {"fact": "twin_swap_occurred", "known_by": ["reader"]},
+            {"fact": "pete_asks_are_you_mommy", "known_by": ["reader", "pete"]}
+          ],
+          "hooks": ["How long until they discover the swap?"],
+          "evidence": "Are you my mommy? Pete asks; She's not your mommy Justin tells Cherry",
+          "beat_turning_point": true
+        }
+      ]
+    },
+    {
+      "beat_id": 2,
+      "beat_title": "The Switch Begins",
+      "episode_range": {"start": 9, "end": 20},
+      "episodes": [
+        {
+          "episode_id": 9,
+          "beat_id": 2,
+          "objective": "Nora: Settle into new room; Cherry: Continue with Justin",
+          "what_changes": [
+            "Chester forces Nora to move to lower floor",
+            "Chester discovers Cherry is his gaming teammate 'sweetcherry'"
+          ],
+          "new_constraints": [
+            "Nora separated further from Hunts",
+            "Chester knows team leader is a child"
+          ],
+          "cliffhanger": "Chester stunned by discovery; Cherry planning to meet 'Chesty'",
+          "facts_revealed": [
+            {"fact": "chester_knows_sweetcherry", "known_by": ["reader", "chester"]}
+          ],
+          "hooks": ["Chester might figure out the twin secret"],
+          "evidence": "Chester collapsed back into his chair as if he had just seen a ghost"
+        },
+        {
+          "episode_id": 10,
+          "beat_id": 2,
+          "objective": "Cherry: Arrange meeting with Chesty; Angela: Lure Nora to bar",
+          "what_changes": [
+            "Angela invites Nora to bar claiming son information",
+            "Anthony prepares romantic gesture for 'Isabel'"
+          ],
+          "new_constraints": [
+            "Angela knows about Nora's son, uses as leverage",
+            "Mistaken identities compounding"
+          ],
+          "cliffhanger": "Both Nora and Cherry heading to bar/café at 8pm",
+          "facts_revealed": [
+            {"fact": "angela_using_son_as_leverage", "known_by": ["reader", "nora"]}
+          ],
+          "hooks": ["Will Angela actually have information?"],
+          "evidence": "If you want to know where that abandoned child of yours is"
+        },
+        {
+          "episode_id": 11,
+          "beat_id": 2,
+          "objective": "Nora: Get information about son from Angela",
+          "what_changes": [
+            "Anthony's 'proposal' targets Nora (not Angela as she believed)",
+            "Angela humiliated publicly"
+          ],
+          "new_constraints": [
+            "Angela's jealousy intensified",
+            "Anthony doesn't recognize Nora"
+          ],
+          "cliffhanger": "Angela still hasn't revealed son's location",
+          "facts_revealed": [
+            {"fact": "angela_publicly_humiliated", "known_by": ["reader", "nora", "angela", "anthony"]}
+          ],
+          "hooks": ["Nora will force the information from Angela"],
+          "evidence": "Anthony stopped in front of Nora instead with roses"
+        },
+        {
+          "episode_id": 12,
+          "beat_id": 2,
+          "objective": "Nora: Force Angela to reveal son's location",
+          "what_changes": [
+            "Justin intervenes in bar fight",
+            "Nora kicks Angela, demands information",
+            "Angela says Henry handled everything"
+          ],
+          "new_constraints": [
+            "Angela doesn't know son's location—Henry is the key",
+            "Justin witnesses Nora's fighting ability"
+          ],
+          "cliffhanger": "Nora learns Henry holds information",
+          "facts_revealed": [
+            {"fact": "henry_is_key_to_son", "known_by": ["reader", "nora"]},
+            {"fact": "nora_can_fight", "known_by": ["reader", "justin"]}
+          ],
+          "hooks": ["Nora must approach Henry directly"],
+          "evidence": "That whole situation with your other child, Dad was the one that handled it"
+        },
+        {
+          "episode_id": 13,
+          "beat_id": 2,
+          "objective": "Cherry: Meet gaming friend Chesty",
+          "what_changes": [
+            "Chester discovers 'sweetcherry' is a child that looks exactly like Pete",
+            "Extreme confusion"
+          ],
+          "new_constraints": [
+            "Chester now suspicious about Pete's identity"
+          ],
+          "cliffhanger": "Chester confronts Pete → Pete acting normal while Cherry acts differently",
+          "facts_revealed": [
+            {"fact": "chester_sees_two_petes", "known_by": ["reader", "chester"]}
+          ],
+          "hooks": ["Will Chester figure out there are twins?"],
+          "evidence": "Chester felt as if the sky was falling"
+        },
+        {
+          "episode_id": 14,
+          "beat_id": 2,
+          "objective": "Nora: Visit Aunt Irene; warn Justin about tutors",
+          "what_changes": [
+            "Nora discovers Aunt Irene has brain tumor requiring surgery",
+            "Nora warns Justin about Pete's tutors (he doesn't listen)"
+          ],
+          "new_constraints": [
+            "Aunt Irene's life at stake; only Athena can perform surgery",
+            "Justin dismisses Nora's concern"
+          ],
+          "cliffhanger": "Lawrence rejects Nora's help offer; Irene needs surgery",
+          "facts_revealed": [
+            {"fact": "irene_has_tumor", "known_by": ["reader", "nora", "irene"]},
+            {"fact": "tutor_abuse_ongoing", "known_by": ["reader", "nora"]}
+          ],
+          "hooks": ["Nora will have to operate as Athena"],
+          "evidence": "She has a brain tumor; Nora tells Justin show more concern toward your son"
+        },
+        {
+          "episode_id": 15,
+          "beat_id": 2,
+          "objective": "TWINS MEET in stairwell",
+          "what_changes": [
+            "Pete and Cherry encounter each other",
+            "Realize they're twins",
+            "Form plan to reunite parents"
+          ],
+          "new_constraints": [
+            "They agree to switch places and hide their identities from parents"
+          ],
+          "cliffhanger": "Plan formed: 'make Daddy and Mommy fall in love'",
+          "facts_revealed": [
+            {"fact": "twins_know_each_other", "known_by": ["reader", "pete", "cherry"]},
+            {"fact": "twins_plan_to_switch", "known_by": ["reader", "pete", "cherry"]}
+          ],
+          "hooks": ["Will their scheme work?"],
+          "evidence": "Cherry... Are you really my twin sister?",
+          "beat_turning_point": true
+        },
+        {
+          "episode_id": 16,
+          "beat_id": 2,
+          "objective": "Twins: Execute first deliberate switch",
+          "what_changes": [
+            "Cherry goes to Justin's suite (as Pete)",
+            "Pete stays with Nora (as Cherry)",
+            "Mrs. Lewis notices 'Cherry' changed clothes"
+          ],
+          "new_constraints": [
+            "Cherry witnesses tutor abuse; reports it to Justin"
+          ],
+          "cliffhanger": "Tutor fired; Justin apologizes to 'Pete'",
+          "facts_revealed": [
+            {"fact": "deliberate_switches_begun", "known_by": ["reader", "pete", "cherry"]},
+            {"fact": "cherry_reports_abuse", "known_by": ["reader", "cherry", "justin"]}
+          ],
+          "hooks": ["The twins are now actively coordinating"],
+          "evidence": "Did she beat you before? Cherry reports to Justin"
+        },
+        {
+          "episode_id": 17,
+          "beat_id": 2,
+          "objective": "Justin: Understand son's behavior changes",
+          "what_changes": [
+            "Cherry continues acting as Pete; confuses Justin with different personality",
+            "Family doctor called"
+          ],
+          "new_constraints": [
+            "Justin suspects mental illness due to personality changes",
+            "Tutor abuse revealed"
+          ],
+          "cliffhanger": "Doctor performs psychological evaluation",
+          "facts_revealed": [
+            {"fact": "justin_confused_by_pete", "known_by": ["reader", "justin"]}
+          ],
+          "hooks": ["How will Justin explain the personality changes?"],
+          "evidence": "Pete's expression changed completely in Justin's view"
+        },
+        {
+          "episode_id": 18,
+          "beat_id": 2,
+          "objective": "Justin: Attempt to bond with 'Pete' (Cherry)",
+          "what_changes": [
+            "Justin tries teaching, gets ridiculous wrong answers (Tom Cruise as first president)",
+            "Fires both tutors"
+          ],
+          "new_constraints": [
+            "Justin decides not to pressure 'Pete' academically",
+            "Chester confused by two 'Petes'"
+          ],
+          "cliffhanger": "Cherry's wrong answers baffle Justin",
+          "facts_revealed": [
+            {"fact": "tutors_fired", "known_by": ["reader", "justin", "cherry"]}
+          ],
+          "hooks": ["Justin is softening toward his 'son'"],
+          "evidence": "Tom Cruise! as answer to first president"
+        },
+        {
+          "episode_id": 19,
+          "beat_id": 2,
+          "objective": "Pete: Enjoy time with Mommy",
+          "what_changes": [
+            "Pete experiences bath/bedtime routine with Nora",
+            "Sleeps in her arms for first time"
+          ],
+          "new_constraints": [
+            "Pete develops deep bond with Nora",
+            "Cherry sends SOS texts from Justin's"
+          ],
+          "cliffhanger": "'I have a mom at last' Pete thinks",
+          "facts_revealed": [
+            {"fact": "pete_bonding_with_nora", "known_by": ["reader"]}
+          ],
+          "hooks": ["Pete is experiencing the mother's love he never had"],
+          "evidence": "Pete fell into a deep sleep listening to her heartbeat"
+        },
+        {
+          "episode_id": 20,
+          "beat_id": 2,
+          "objective": "Twins: Arrange 'date' for parents at movies",
+          "what_changes": [
+            "Cherry and Pete coordinate movie theater meeting",
+            "Justin and Nora end up seated next to each other"
+          ],
+          "new_constraints": [
+            "Justin still hostile to Nora; accuses her of following him",
+            "Moviegoer mistakes them for married couple"
+          ],
+          "cliffhanger": "Disastrous first 'date'",
+          "facts_revealed": [
+            {"fact": "twins_actively_matchmaking", "known_by": ["reader", "pete", "cherry"]}
+          ],
+          "hooks": ["The twins' scheme has a long way to go"],
+          "evidence": "I told you, I hate it when people try to use my son Justin says"
+        }
+      ]
+    },
+    {
+      "beat_id": 3,
+      "beat_title": "Athena's Surgery",
+      "episode_range": {"start": 21, "end": 30},
+      "episodes": [
+        {
+          "episode_id": 21,
+          "beat_id": 3,
+          "objective": "Deal with movie 'date' fallout",
+          "what_changes": [
+            "Justin accuses Nora of stalking",
+            "Moviegoer mistakes them for married couple",
+            "Nora returns 'Cherry' to hotel"
+          ],
+          "new_constraints": [
+            "Hostility reinforced; both have wrong child"
+          ],
+          "cliffhanger": "Pete sends SOS to Cherry about movie disaster",
+          "facts_revealed": [],
+          "hooks": ["Surgery preparation begins"],
+          "evidence": "Take your domestic issues outside moviegoer says"
+        },
+        {
+          "episode_id": 22,
+          "beat_id": 3,
+          "objective": "Nora: Prepare for Aunt Irene's surgery",
+          "what_changes": [
+            "Angela lies, claims she contacted Athena",
+            "Nora prepares to operate secretly"
+          ],
+          "new_constraints": [
+            "Angela will be in operating room expecting credit",
+            "Justin knows Athena is operating"
+          ],
+          "cliffhanger": "Angela's deception will backfire",
+          "facts_revealed": [
+            {"fact": "angela_claims_athena_credit", "known_by": ["reader", "angela"]}
+          ],
+          "hooks": ["Angela is about to be exposed"],
+          "evidence": "Angela: I'm the one that contacted you to Athena"
+        },
+        {
+          "episode_id": 23,
+          "beat_id": 3,
+          "objective": "Nora: Perform surgery; expose Angela",
+          "what_changes": [
+            "Athena (Nora) publicly exposes Angela's lie about sending email",
+            "Angela expelled from observation"
+          ],
+          "new_constraints": [
+            "Angela loses academic standing; Dr. Larson angry",
+            "Irene learns Nora is Athena"
+          ],
+          "cliffhanger": "Angela humiliated; Irene knows truth",
+          "facts_revealed": [
+            {"fact": "irene_knows_nora_is_athena", "known_by": ["reader", "irene", "nora"]},
+            {"fact": "angela_exposed_as_liar", "known_by": ["reader", "angela", "medical_community"]}
+          ],
+          "hooks": ["Justin will try to catch Athena"],
+          "evidence": "Nora Athena confirms; Irene recognized the woman's cat-like eyes",
+          "beat_turning_point": true
+        },
+        {
+          "episode_id": 24,
+          "beat_id": 3,
+          "objective": "Justin: Catch Athena after surgery",
+          "what_changes": [
+            "7-hour surgery successful",
+            "Nora escapes during commotion",
+            "Justin locks down floor but can't find her"
+          ],
+          "new_constraints": [
+            "Nora stayed behind to do sutures herself; her assistant Lily covers for her"
+          ],
+          "cliffhanger": "Justin suspects Nora might be Athena",
+          "facts_revealed": [
+            {"fact": "justin_suspects_nora_is_athena", "known_by": ["reader", "justin"]}
+          ],
+          "hooks": ["The third possibility..."],
+          "evidence": "Justin: The third possibility is that Nora Smith is Athena"
+        },
+        {
+          "episode_id": 25,
+          "beat_id": 3,
+          "objective": "Justin: Ask Nora to play with Pete",
+          "what_changes": [
+            "Justin invites Nora to spend time with 'son'",
+            "Nora refuses",
+            "Twins agree to switch back temporarily"
+          ],
+          "new_constraints": [
+            "Cherry exhausted by Justin's household",
+            "Pete wants more time with Nora"
+          ],
+          "cliffhanger": "Twins swap back; Cherry relieved",
+          "facts_revealed": [],
+          "hooks": ["Justin is trying to get closer to Nora"],
+          "evidence": "I'm not a nanny Nora refuses Justin"
+        },
+        {
+          "episode_id": 26,
+          "beat_id": 3,
+          "objective": "Cherry: Navigate close call when Justin arrives",
+          "what_changes": [
+            "Justin catches Cherry at Nora's door",
+            "Takes her upstairs",
+            "Pete disappears before discovery"
+          ],
+          "new_constraints": [
+            "Near exposure averted; Pete hides just in time",
+            "Justin terrified about 'Pete's' safety"
+          ],
+          "cliffhanger": "Justin warns 'Pete' about leaving",
+          "facts_revealed": [],
+          "hooks": ["The twins almost got caught"],
+          "evidence": "Cherry: We're finished! but Pete's room is empty"
+        },
+        {
+          "episode_id": 27,
+          "beat_id": 3,
+          "objective": "Pete: Visit Aunt Irene; navigate suspicions",
+          "what_changes": [
+            "Nora takes Pete (as Cherry) to visit Irene",
+            "Angela attacks",
+            "Family learns about Cherry"
+          ],
+          "new_constraints": [
+            "Angela insults Cherry's unknown father",
+            "Nora protects child fiercely"
+          ],
+          "cliffhanger": "Angela mentions unknown father",
+          "facts_revealed": [
+            {"fact": "smith_family_knows_cherry_exists", "known_by": ["reader", "smith_family"]}
+          ],
+          "hooks": ["Family conflict escalating"],
+          "evidence": "My father is not a delinquent Pete says"
+        },
+        {
+          "episode_id": 28,
+          "beat_id": 3,
+          "objective": "Navigate family confrontations",
+          "what_changes": [
+            "Henry demands DNA test to prove Cherry's father",
+            "Threatens to expose 'illegitimate' child"
+          ],
+          "new_constraints": [
+            "Stakes raised: if DNA tested, Pete would be revealed as Justin's son"
+          ],
+          "cliffhanger": "DNA test threatened",
+          "facts_revealed": [
+            {"fact": "dna_test_threatened", "known_by": ["reader", "henry", "nora"]}
+          ],
+          "hooks": ["A DNA test would reveal everything"]
+        },
+        {
+          "episode_id": 29,
+          "beat_id": 3,
+          "objective": "Emergency: Simon Anderson collapses",
+          "what_changes": [
+            "Nora performs emergency operation on stranger (Simon Anderson)",
+            "Shows medical skills publicly"
+          ],
+          "new_constraints": [
+            "Nora's surgical skills now witnessed by outsiders",
+            "Andersons grateful"
+          ],
+          "cliffhanger": "Simon's family wants to thank savior",
+          "facts_revealed": [
+            {"fact": "nora_saved_simon_anderson", "known_by": ["reader", "andersons"]}
+          ],
+          "hooks": ["The Andersons will become important"]
+        },
+        {
+          "episode_id": 30,
+          "beat_id": 3,
+          "objective": "Aftermath of emergency; Irene recovery",
+          "what_changes": [
+            "Irene recovering well",
+            "Nora's emergency surgery attracts attention",
+            "Twin switches continue"
+          ],
+          "new_constraints": [
+            "Multiple people now know about Nora's medical abilities"
+          ],
+          "cliffhanger": "Quest for surgeon's identity begins",
+          "facts_revealed": [
+            {"fact": "andersons_searching_for_savior", "known_by": ["reader", "andersons"]}
+          ],
+          "hooks": ["New York arc approaching"]
+        }
+      ]
+    },
+    {
+      "beat_id": 4,
+      "beat_title": "New York Journey",
+      "episode_range": {"start": 31, "end": 45},
+      "episodes": [
+        {
+          "episode_id": 31,
+          "beat_id": 4,
+          "objective": "Howard confronts Justin about Pete",
+          "what_changes": [
+            "Howard demands Pete be punished for allegedly pushing grandmother",
+            "Justin defends son"
+          ],
+          "new_constraints": [
+            "Family meeting scheduled; Pete could be expelled from family"
+          ],
+          "cliffhanger": "One week to prove Pete's innocence",
+          "facts_revealed": [
+            {"fact": "pete_accused_of_pushing_grandmother", "known_by": ["reader", "hunt_family"]}
+          ],
+          "hooks": ["Only the grandmother can testify to Pete's innocence"],
+          "evidence": "They'll expel him from the family Howard threatens"
+        },
+        {
+          "episode_id": 32,
+          "beat_id": 4,
+          "objective": "Twins plan; Cherry reveals secret",
+          "what_changes": [
+            "Cherry tells Pete that Mommy is Dr. Athena",
+            "They realize she can save great-grandma"
+          ],
+          "new_constraints": [
+            "Pete now knows his mother is Athena; the solution exists"
+          ],
+          "cliffhanger": "Pete knows the secret",
+          "facts_revealed": [
+            {"fact": "pete_knows_nora_is_athena", "known_by": ["reader", "pete", "cherry"]}
+          ],
+          "hooks": ["The twins have a plan"],
+          "evidence": "Mommy is Professor Athena! Cherry reveals",
+          "beat_turning_point": true
+        },
+        {
+          "episode_id": 33,
+          "beat_id": 4,
+          "objective": "Nora: Offer to treat grandmother",
+          "what_changes": [
+            "Nora offers to help; Lawrence dismisses her",
+            "Melissa Anderson recognizes her from emergency surgery"
+          ],
+          "new_constraints": [
+            "Andersons know Nora has medical skills; Justin learns of her offer"
+          ],
+          "cliffhanger": "Justin will reconsider",
+          "facts_revealed": [
+            {"fact": "melissa_recognizes_nora", "known_by": ["reader", "melissa", "justin"]}
+          ],
+          "hooks": ["Justin will have to accept help"],
+          "evidence": "She's the kind young lady who saved my husband's life Melissa says"
+        },
+        {
+          "episode_id": 34,
+          "beat_id": 4,
+          "objective": "Justin: Accept Nora's help",
+          "what_changes": [
+            "Justin agrees to let Nora treat grandmother",
+            "Nora's condition: help her find her son"
+          ],
+          "new_constraints": [
+            "Deal struck: surgery for information; trip to New York"
+          ],
+          "cliffhanger": "Departure for New York",
+          "facts_revealed": [
+            {"fact": "deal_surgery_for_help", "known_by": ["reader", "nora", "justin"]}
+          ],
+          "hooks": ["New York journey begins"],
+          "evidence": "I want your son Nora says (then clarifies help finding hers)"
+        },
+        {
+          "episode_id": 35,
+          "beat_id": 4,
+          "objective": "Arrive in New York; meet Aunt Melissa",
+          "what_changes": [
+            "Anderson family welcomes Nora",
+            "Introduce her to New York society",
+            "Nora meets relatives"
+          ],
+          "new_constraints": [
+            "Nora has support network in NY; her mother's reputation established"
+          ],
+          "cliffhanger": "Family tensions emerge",
+          "facts_revealed": [
+            {"fact": "nora_mother_was_legend", "known_by": ["reader", "nora"]}
+          ],
+          "hooks": ["Nora's mother had a mysterious past"],
+          "evidence": "Your mom was a legend in New York"
+        },
+        {
+          "episode_id": 36,
+          "beat_id": 4,
+          "objective": "Navigate twin logistics in New York",
+          "what_changes": [
+            "Pete attending Quinn martial arts; Cherry at Andersons",
+            "Switching continues"
+          ],
+          "new_constraints": [
+            "Quinn recognizes Pete as Nora's son; accepts him as student"
+          ],
+          "cliffhanger": "Quinn knows the secret",
+          "facts_revealed": [
+            {"fact": "quinn_knows_pete_is_noras_son", "known_by": ["reader", "quinn", "pete"]}
+          ],
+          "hooks": ["Quinn becomes an ally"],
+          "evidence": "Quinn: I know you're Nora's son"
+        },
+        {
+          "episode_id": 37,
+          "beat_id": 4,
+          "objective": "Nora: Prepare for grandmother's surgery; Pete: Begin training",
+          "what_changes": [
+            "Surgery scheduled",
+            "Pete training with Quinn",
+            "Cherry adapting to Anderson life"
+          ],
+          "new_constraints": [
+            "Surgery high stakes; Pete gaining skills"
+          ],
+          "cliffhanger": "Surgery approaches",
+          "facts_revealed": [],
+          "hooks": ["Everything is building to the surgery"]
+        },
+        {
+          "episode_id": 38,
+          "beat_id": 4,
+          "objective": "Continue preparations",
+          "what_changes": [
+            "Training continues",
+            "Surgery imminent"
+          ],
+          "new_constraints": [],
+          "cliffhanger": "Surgery imminent",
+          "facts_revealed": [],
+          "hooks": []
+        },
+        {
+          "episode_id": 39,
+          "beat_id": 4,
+          "objective": "Building confidence; family dynamics",
+          "what_changes": [
+            "Pete shows martial arts talent",
+            "Nora navigates Anderson family"
+          ],
+          "new_constraints": [
+            "Multiple relationships developing; skills improving"
+          ],
+          "cliffhanger": "Annual Hunt assessment approaching",
+          "facts_revealed": [],
+          "hooks": []
+        },
+        {
+          "episode_id": 40,
+          "beat_id": 4,
+          "objective": "Relationship development",
+          "what_changes": [
+            "Justin growing closer to Nora"
+          ],
+          "new_constraints": [],
+          "cliffhanger": "Hunt estate visit imminent",
+          "facts_revealed": [],
+          "hooks": []
+        },
+        {
+          "episode_id": 41,
+          "beat_id": 4,
+          "objective": "Travel to Hunt estate for grandmother's surgery",
+          "what_changes": [
+            "Arrival at Hunt family compound",
+            "Meeting extended family; political tensions"
+          ],
+          "new_constraints": [
+            "Hunt family politics; grandmother still unconscious"
+          ],
+          "cliffhanger": "Surgery will proceed",
+          "facts_revealed": [],
+          "hooks": ["The surgery that will change everything"]
+        },
+        {
+          "episode_id": 42,
+          "beat_id": 4,
+          "objective": "Nora: Perform surgery on grandmother (Part 1)",
+          "what_changes": [
+            "Brain surgery begins"
+          ],
+          "new_constraints": [],
+          "cliffhanger": "Surgery in progress",
+          "facts_revealed": [],
+          "hooks": []
+        },
+        {
+          "episode_id": 43,
+          "beat_id": 4,
+          "objective": "Nora: Perform surgery on grandmother (Part 2)",
+          "what_changes": [
+            "Successful brain surgery; grandmother will recover",
+            "Pete's innocence can be proven"
+          ],
+          "new_constraints": [
+            "Surgery success means grandmother can testify Pete is innocent"
+          ],
+          "cliffhanger": "Grandmother recovering",
+          "facts_revealed": [
+            {"fact": "grandmother_surgery_successful", "known_by": ["reader", "hunt_family", "nora"]}
+          ],
+          "hooks": ["Pete will be cleared"],
+          "beat_turning_point": true
+        },
+        {
+          "episode_id": 44,
+          "beat_id": 4,
+          "objective": "Aftermath; relationship development",
+          "what_changes": [
+            "Grandmother recovering",
+            "Hunt family owes Nora",
+            "Pete and Justin's relationship improving"
+          ],
+          "new_constraints": [
+            "Power dynamics shifted; Nora has leverage"
+          ],
+          "cliffhanger": "Return to NYC; new status",
+          "facts_revealed": [],
+          "hooks": []
+        },
+        {
+          "episode_id": 45,
+          "beat_id": 4,
+          "objective": "Establish new status quo",
+          "what_changes": [
+            "Recovery complete; gratitude established"
+          ],
+          "new_constraints": [],
+          "cliffhanger": "Beat 5 begins",
+          "facts_revealed": [],
+          "hooks": ["Nora and Justin's relationship has transformed"]
+        }
+      ]
+    },
+    {
+      "beat_id": 5,
+      "beat_title": "Secrets and Revelations",
+      "episode_range": {"start": 46, "end": 60},
+      "episodes": [
+        {
+          "episode_id": 46,
+          "beat_id": 5,
+          "objective": "Quinn recognizes Pete as Nora's son",
+          "what_changes": [
+            "Quinn confirms he knows Pete's identity",
+            "Agrees to keep secret"
+          ],
+          "new_constraints": [
+            "Quinn becomes ally who knows truth"
+          ],
+          "cliffhanger": "Quinn protects the secret",
+          "facts_revealed": [
+            {"fact": "quinn_confirmed_ally", "known_by": ["reader", "quinn", "pete"]}
+          ],
+          "hooks": ["The circle of those who know grows"]
+        },
+        {
+          "episode_id": 47,
+          "beat_id": 5,
+          "objective": "Nora learns about mother's past",
+          "what_changes": [
+            "Mother was 'most talented woman in New York'",
+            "Was engaged to Ian Smith",
+            "Company name Idealian contains 'Ian'"
+          ],
+          "new_constraints": [
+            "Ian Smith connection established"
+          ],
+          "cliffhanger": "Mystery of mother deepens",
+          "facts_revealed": [
+            {"fact": "mother_engaged_to_ian", "known_by": ["reader", "nora"]},
+            {"fact": "idealian_contains_ian", "known_by": ["reader", "nora"]}
+          ],
+          "hooks": ["What happened to Nora's mother?"],
+          "beat_turning_point": true
+        },
+        {
+          "episode_id": 48,
+          "beat_id": 5,
+          "objective": "Near discovery at Quinn's school",
+          "what_changes": [
+            "Nora nearly discovers twins switching",
+            "Pete's training continues"
+          ],
+          "new_constraints": [
+            "Close call averted"
+          ],
+          "cliffhanger": "Secret preserved",
+          "facts_revealed": [],
+          "hooks": []
+        },
+        {
+          "episode_id": 53,
+          "beat_id": 5,
+          "objective": "Carefree Pills introduced",
+          "what_changes": [
+            "Nora's mother's formula enters market"
+          ],
+          "new_constraints": [
+            "Pharmaceutical competition begins"
+          ],
+          "cliffhanger": "Auction planned",
+          "facts_revealed": [
+            {"fact": "carefree_pills_introduced", "known_by": ["reader", "nora"]}
+          ],
+          "hooks": ["Will the pills succeed?"]
+        },
+        {
+          "episode_id": 56,
+          "beat_id": 5,
+          "objective": "Carefree Pills auction",
+          "what_changes": [
+            "Successful auction",
+            "Nora's wealth and status established"
+          ],
+          "new_constraints": [
+            "Nora now wealthy and respected"
+          ],
+          "cliffhanger": "New status established",
+          "facts_revealed": [
+            {"fact": "carefree_pills_success", "known_by": ["reader", "new_york_society"]}
+          ],
+          "hooks": []
+        },
+        {
+          "episode_id": 60,
+          "beat_id": 5,
+          "objective": "Ian Smith revealed to be dying",
+          "what_changes": [
+            "Ian's illness revealed"
+          ],
+          "new_constraints": [
+            "Urgency added to understanding mother's history"
+          ],
+          "cliffhanger": "Ian needs help",
+          "facts_revealed": [
+            {"fact": "ian_smith_dying", "known_by": ["reader", "nora"]}
+          ],
+          "hooks": ["Can Nora save Ian? Should she?"]
+        }
+      ]
+    },
+    {
+      "beat_id": 6,
+      "beat_title": "Society Games",
+      "episode_range": {"start": 61, "end": 75},
+      "episodes": [
+        {
+          "episode_id": 65,
+          "beat_id": 6,
+          "objective": "Jon Myers tries to take Nora as student",
+          "what_changes": [
+            "Nora rejects him (she's more skilled)"
+          ],
+          "new_constraints": [
+            "Nora demonstrates she surpasses established doctors"
+          ],
+          "cliffhanger": "Nora's capabilities surprise people",
+          "facts_revealed": [
+            {"fact": "nora_surpasses_jon_myers", "known_by": ["reader"]}
+          ],
+          "hooks": []
+        },
+        {
+          "episode_id": 66,
+          "beat_id": 6,
+          "objective": "Ian Smith's condition worsens",
+          "what_changes": [
+            "Ian near death",
+            "Joel Smith introduced"
+          ],
+          "new_constraints": [
+            "Ian subplot intensifies"
+          ],
+          "cliffhanger": "Ian's time running out",
+          "facts_revealed": [],
+          "hooks": []
+        },
+        {
+          "episode_id": 71,
+          "beat_id": 6,
+          "objective": "Ferrari gift subplot",
+          "what_changes": [
+            "Justin's romantic gestures continue"
+          ],
+          "new_constraints": [],
+          "cliffhanger": "Justin's pursuit obvious",
+          "facts_revealed": [],
+          "hooks": []
+        }
+      ]
+    },
+    {
+      "beat_id": 7,
+      "beat_title": "Dance and Drama",
+      "episode_range": {"start": 76, "end": 90},
+      "episodes": [
+        {
+          "episode_id": 77,
+          "beat_id": 7,
+          "objective": "Society dance event",
+          "what_changes": [
+            "Nora demonstrates unexpected dancing ability",
+            "Tanya Turner connection"
+          ],
+          "new_constraints": [
+            "Another hidden skill revealed"
+          ],
+          "cliffhanger": "Nora belongs in any arena",
+          "facts_revealed": [
+            {"fact": "nora_can_dance", "known_by": ["reader", "new_york_society"]}
+          ],
+          "hooks": [],
+          "beat_turning_point": true
+        },
+        {
+          "episode_id": 78,
+          "beat_id": 7,
+          "objective": "Cherry's streaming introduced",
+          "what_changes": [
+            "Chester helps Cherry start streaming"
+          ],
+          "new_constraints": [
+            "Cherry building public identity"
+          ],
+          "cliffhanger": "Gaming career begins",
+          "facts_revealed": [
+            {"fact": "cherry_streaming_begins", "known_by": ["reader", "cherry", "chester"]}
+          ],
+          "hooks": []
+        },
+        {
+          "episode_id": 86,
+          "beat_id": 7,
+          "objective": "Mrs. Hunt speculation",
+          "what_changes": [
+            "Society speculating about Justin's romantic interest"
+          ],
+          "new_constraints": [],
+          "cliffhanger": "Relationship publicly noticed",
+          "facts_revealed": [],
+          "hooks": []
+        }
+      ]
+    },
+    {
+      "beat_id": 8,
+      "beat_title": "Kindergarten and Business",
+      "episode_range": {"start": 91, "end": 100},
+      "episodes": [
+        {
+          "episode_id": 91,
+          "beat_id": 8,
+          "objective": "Justin: Make business decisions; Pete: Hair length",
+          "what_changes": [
+            "Justin rejects billion-dollar deal because of mood related to 'Pete'",
+            "Psychiatrist monitoring 'Pete'"
+          ],
+          "new_constraints": [
+            "Justin's feelings affecting business",
+            "Pete refuses haircut"
+          ],
+          "cliffhanger": "Anniversary celebration planned",
+          "facts_revealed": [
+            {"fact": "justin_prioritizing_personal", "known_by": ["reader"]}
+          ],
+          "hooks": [],
+          "evidence": "Mr. Hunt is in a bad mood today Sean explains"
+        },
+        {
+          "episode_id": 92,
+          "beat_id": 8,
+          "objective": "Cherry: Kindergarten dance dynamics",
+          "what_changes": [
+            "Whitney assigns Cherry center position after husband's call",
+            "Cherry excels"
+          ],
+          "new_constraints": [
+            "Cherry becomes popular; Sinead jealous"
+          ],
+          "cliffhanger": "Brandon challenges Cherry",
+          "facts_revealed": [
+            {"fact": "cherry_center_position", "known_by": ["reader", "cherry"]}
+          ],
+          "hooks": []
+        },
+        {
+          "episode_id": 93,
+          "beat_id": 8,
+          "objective": "Cherry: Face Brandon's challenge",
+          "what_changes": [
+            "Brandon challenges: become a boy by tomorrow or be his sidekick",
+            "Cherry agrees (has Pete)"
+          ],
+          "new_constraints": [
+            "Twins can swap to win challenge"
+          ],
+          "cliffhanger": "Pete will attend as Cherry",
+          "facts_revealed": [
+            {"fact": "brandon_challenge_issued", "known_by": ["reader", "cherry", "brandon"]}
+          ],
+          "hooks": ["The twins have a perfect solution"],
+          "evidence": "If you can become a boy by tomorrow Brandon challenges"
+        },
+        {
+          "episode_id": 96,
+          "beat_id": 8,
+          "objective": "Cherry: Gaming live stream begins",
+          "what_changes": [
+            "Chester helps Cherry start streaming",
+            "Gaming community interest"
+          ],
+          "new_constraints": [
+            "Cherry's public profile growing"
+          ],
+          "cliffhanger": "Stream popularity",
+          "facts_revealed": [],
+          "hooks": []
+        },
+        {
+          "episode_id": 98,
+          "beat_id": 8,
+          "objective": "Nora: Stock market intelligence",
+          "what_changes": [
+            "Nora shares Justin's economic predictions with Andersons",
+            "Proves valuable information source"
+          ],
+          "new_constraints": [
+            "Farrell Wood confirms Justin's tip was accurate"
+          ],
+          "cliffhanger": "Nora's connection to Justin proven valuable",
+          "facts_revealed": [],
+          "hooks": []
+        },
+        {
+          "episode_id": 100,
+          "beat_id": 8,
+          "objective": "Justin: Relationship advancement",
+          "what_changes": [
+            "Justin invites Nora to dinner",
+            "Tricks Pete about Italian food",
+            "Pete helps Cherry with homework"
+          ],
+          "new_constraints": [
+            "Romantic dinner planned",
+            "Twins continue helping each other"
+          ],
+          "cliffhanger": "Beat concludes with relationship progressing",
+          "facts_revealed": [
+            {"fact": "romantic_dinner_planned", "known_by": ["reader", "nora", "justin"]}
+          ],
+          "hooks": ["The first 100 episodes end with hope for the family"],
+          "evidence": "I think you owe me dinner Justin messages",
+          "beat_turning_point": true
+        }
+      ]
+    }
+  ]
+}

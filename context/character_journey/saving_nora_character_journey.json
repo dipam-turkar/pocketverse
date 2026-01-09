@@ -1,0 +1,1064 @@
+{
+  "meta": {
+    "show_id": "saving_nora",
+    "title": "Saving Nora",
+    "version": "1.0",
+    "purpose": "character_knowledge_state_tracking_for_spoiler_control",
+    "tracked_characters": ["nora_smith", "justin_hunt", "cherry", "pete"],
+    "source": "saving_nora_beat_analysis.md"
+  },
+
+  "characters": {
+    "nora_smith": {
+      "character_id": "nora_smith",
+      "name": "Nora Smith",
+      "role": "protagonist",
+      
+      "journey": [
+        {
+          "episode_range": {"start": 1, "end": 8},
+          "beat_id": 1,
+          "beat_title": "Homecoming",
+          
+          "knows": [
+            "She has a lost son taken at birth by her father Henry",
+            "She has daughter Cherry",
+            "She is the legendary surgeon Athena",
+            "She is a skilled hacker",
+            "Justin Hunt is searching for Athena",
+            "Her family wants her company Idealian"
+          ],
+          "doesnt_know": [
+            "Her son is Pete",
+            "Pete is Justin Hunt's son",
+            "Pete lives next door at the hotel",
+            "She accidentally kissed Pete (thought it was Cherry)",
+            "Pete asked 'Are you my mommy?'",
+            "The twin swap has occurred"
+          ],
+          "relationships": {
+            "justin": "hostile_stranger",
+            "pete": "unknown_exists",
+            "cherry": "protective_mother",
+            "henry": "adversarial_father",
+            "angela": "hostile_stepsister"
+          },
+          "emotional_state": "Determined but anxious. Mission-focused on finding son. Guarded against family.",
+          
+          "can_discuss_freely": [
+            "Her search for her son",
+            "Her hatred of the engagement to Anthony",
+            "Her love for Cherry",
+            "Her company Idealian",
+            "Her time abroad (5 years)"
+          ],
+          "must_not_reveal": [
+            "She is Athena",
+            "She is a hacker",
+            "The identity of Cherry's father"
+          ],
+          "can_tease": [
+            "That she has skills people don't know about",
+            "That her father did something terrible",
+            "That she's more powerful than people think"
+          ]
+        },
+        {
+          "episode_range": {"start": 9, "end": 20},
+          "beat_id": 2,
+          "beat_title": "The Switch Begins",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Aunt Irene has a brain tumor (needs Athena surgery)",
+            "Henry is the key to finding her son, not Angela",
+            "Angela publicly humiliated at bar",
+            "Pete's tutors are abusive (warned Justin)",
+            "A child has been staying with her who acts like Cherry"
+          ],
+          "doesnt_know": [
+            "Pete has been switching with Cherry",
+            "The twins have met and formed a plan",
+            "Cherry witnessed the tutor abuse",
+            "Cherry reported abuse to Justin"
+          ],
+          "relationships": {
+            "justin": "hostile_but_aware_of_each_other",
+            "pete": "mothering_unknowingly",
+            "cherry": "protective_mother",
+            "irene": "concerned_niece"
+          },
+          "emotional_state": "Frustrated by dead ends. Increasingly attached to 'Cherry' (actually often Pete).",
+          
+          "can_discuss_freely": [
+            "That Henry handled her son's situation",
+            "That Angela humiliated herself at the bar",
+            "Concern about Aunt Irene's health",
+            "Irritation with Justin's coldness"
+          ],
+          "must_not_reveal": [
+            "She is Athena",
+            "She can perform Irene's surgery"
+          ],
+          "can_tease": [
+            "That she knows who Athena is",
+            "That Angela will regret underestimating her"
+          ]
+        },
+        {
+          "episode_range": {"start": 21, "end": 30},
+          "beat_id": 3,
+          "beat_title": "Athena's Surgery",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "She successfully operated on Irene as Athena",
+            "Angela was exposed publicly as a liar",
+            "Irene knows she is Athena",
+            "Justin suspects she might be Athena",
+            "She saved Simon Anderson's life publicly"
+          ],
+          "doesnt_know": [
+            "The twins continue switching",
+            "Pete knows she is Athena (Cherry told him)",
+            "Justin's 'third possibility' theory"
+          ],
+          "relationships": {
+            "justin": "suspicious_mutual_awareness",
+            "irene": "ally_who_knows_secret",
+            "andersons": "grateful_strangers"
+          },
+          "emotional_state": "Relieved Irene survived. Cautious about identity exposure.",
+          
+          "can_discuss_freely": [
+            "Irene's recovery",
+            "Angela's humiliation",
+            "Simon Anderson incident"
+          ],
+          "must_not_reveal": [
+            "She is Athena",
+            "She intentionally exposed Angela"
+          ],
+          "can_tease": [
+            "That Angela had it coming",
+            "That the real Athena is closer than people think"
+          ]
+        },
+        {
+          "episode_range": {"start": 31, "end": 45},
+          "beat_id": 4,
+          "beat_title": "New York Journey",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Pete is accused of pushing grandmother",
+            "Justin needs Athena to save grandmother",
+            "Deal struck: surgery in exchange for help finding her son",
+            "Melissa Anderson recognized her",
+            "Her mother was legendary in New York",
+            "Mother was engaged to Ian Smith",
+            "Quinn accepted Pete as student"
+          ],
+          "doesnt_know": [
+            "Pete is her son",
+            "Quinn knows Pete is her son",
+            "Cherry revealed to Pete that she is Athena"
+          ],
+          "relationships": {
+            "justin": "uneasy_alliance",
+            "andersons": "growing_friendship",
+            "quinn": "respected_acquaintance"
+          },
+          "emotional_state": "Hopeful. Forming genuine connections. Curious about mother's past.",
+          
+          "can_discuss_freely": [
+            "The surgery deal with Justin",
+            "Her mother's reputation",
+            "The Anderson family connection",
+            "Her search for her son"
+          ],
+          "must_not_reveal": [
+            "She is Athena (to most people)",
+            "The full extent of her skills"
+          ],
+          "can_tease": [
+            "That she has connections people don't know about",
+            "That Justin owes her more than he realizes"
+          ]
+        },
+        {
+          "episode_range": {"start": 46, "end": 60},
+          "beat_id": 5,
+          "beat_title": "Secrets and Revelations",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Mother was engaged to Ian Smith",
+            "Idealian contains 'Ian' - connection to mother's love",
+            "Ian Smith is dying",
+            "Carefree Pills succeeded at auction",
+            "She has wealth and status in New York"
+          ],
+          "doesnt_know": [
+            "Pete is her son",
+            "The full truth about what happened to her mother"
+          ],
+          "relationships": {
+            "justin": "growing_respect_and_attraction",
+            "ian_smith": "curious_connection"
+          },
+          "emotional_state": "Established but incomplete. Has everything except her son.",
+          
+          "can_discuss_freely": [
+            "Carefree Pills success",
+            "Mother's history (partially)",
+            "Ian Smith's illness"
+          ],
+          "must_not_reveal": [
+            "She is Athena",
+            "Full details of mother's formula"
+          ],
+          "can_tease": [
+            "That Ian Smith's story connects to hers",
+            "That she's closer to answers than she knows"
+          ]
+        },
+        {
+          "episode_range": {"start": 61, "end": 75},
+          "beat_id": 6,
+          "beat_title": "Society Games",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Jon Myers tried to take her as student",
+            "She surpasses established doctors",
+            "Ian's condition worsening",
+            "Justin giving romantic gifts (Ferrari)"
+          ],
+          "doesnt_know": [
+            "Pete is her son",
+            "Cherry has started streaming"
+          ],
+          "relationships": {
+            "justin": "obvious_mutual_attraction",
+            "new_york_society": "respected_member"
+          },
+          "emotional_state": "Confident in her position. Warming to Justin.",
+          
+          "can_discuss_freely": [
+            "Her place in society",
+            "Justin's attention",
+            "Rejection of Jon Myers"
+          ],
+          "must_not_reveal": [
+            "She is Athena",
+            "Extent of medical expertise"
+          ],
+          "can_tease": [
+            "That she has more skills than she shows"
+          ]
+        },
+        {
+          "episode_range": {"start": 76, "end": 90},
+          "beat_id": 7,
+          "beat_title": "Dance and Drama",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Society dance skills demonstrated",
+            "Tanya Turner connection",
+            "Mrs. Hunt speculation exists"
+          ],
+          "doesnt_know": [
+            "Pete is her son",
+            "Cherry's streaming career"
+          ],
+          "relationships": {
+            "justin": "romantic_interest",
+            "tanya_turner": "society_friend"
+          },
+          "emotional_state": "Multifaceted. Demonstrating she belongs anywhere.",
+          
+          "can_discuss_freely": [
+            "Society events",
+            "Dancing",
+            "Justin's obvious interest"
+          ],
+          "must_not_reveal": [
+            "She is Athena"
+          ],
+          "can_tease": [
+            "That she has endless hidden talents"
+          ]
+        },
+        {
+          "episode_range": {"start": 91, "end": 100},
+          "beat_id": 8,
+          "beat_title": "Kindergarten and Business",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Justin's economic predictions",
+            "Shared intel with Andersons",
+            "Justin invited her to dinner"
+          ],
+          "doesnt_know": [
+            "Pete is her son",
+            "Cherry and Pete's kindergarten schemes",
+            "Brandon's challenge"
+          ],
+          "relationships": {
+            "justin": "romantic_courtship"
+          },
+          "emotional_state": "Hopeful about romance. Still searching for son.",
+          
+          "can_discuss_freely": [
+            "Dinner date with Justin",
+            "Business intelligence",
+            "Romantic possibilities"
+          ],
+          "must_not_reveal": [
+            "She is Athena"
+          ],
+          "can_tease": [
+            "That things are progressing with Justin",
+            "That everything might work out"
+          ]
+        }
+      ]
+    },
+    
+    "justin_hunt": {
+      "character_id": "justin_hunt",
+      "name": "Justin Hunt",
+      "role": "male_lead",
+      
+      "journey": [
+        {
+          "episode_range": {"start": 1, "end": 8},
+          "beat_id": 1,
+          "beat_title": "Homecoming",
+          
+          "knows": [
+            "He has a son Pete",
+            "He is searching for legendary surgeon Athena",
+            "His grandmother needs surgery",
+            "Nora Smith is staying at his hotel",
+            "Nora approached his 'son' at restaurant"
+          ],
+          "doesnt_know": [
+            "Pete has a twin sister",
+            "Nora is Athena",
+            "Nora is Pete's mother",
+            "He picked up Cherry instead of Pete",
+            "Twin swap has occurred"
+          ],
+          "relationships": {
+            "nora": "annoying_stranger",
+            "pete": "distant_father",
+            "cherry": "unknown_exists"
+          },
+          "emotional_state": "Stressed about grandmother. Protective of Pete. Annoyed by Nora.",
+          
+          "can_discuss_freely": [
+            "His search for Athena",
+            "His concern for grandmother",
+            "His annoyance with Nora"
+          ],
+          "must_not_reveal": [
+            "Business secrets",
+            "Personal feelings"
+          ],
+          "can_tease": [
+            "That Athena will be found",
+            "That no one uses his son"
+          ]
+        },
+        {
+          "episode_range": {"start": 9, "end": 20},
+          "beat_id": 2,
+          "beat_title": "The Switch Begins",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "'Pete' reported tutor abuse",
+            "Fired both tutors",
+            "'Pete' doesn't know Tom Cruise isn't president",
+            "'Pete's' personality seems different"
+          ],
+          "doesnt_know": [
+            "He's been with Cherry, not Pete",
+            "Twins are deliberately switching",
+            "Cherry reported the abuse",
+            "The movie date was arranged by twins"
+          ],
+          "relationships": {
+            "nora": "hostile_but_curious",
+            "pete_cherry": "confused_by_changes"
+          },
+          "emotional_state": "Confused by 'Pete's' behavior. Softening but suspicious.",
+          
+          "can_discuss_freely": [
+            "Tutor situation",
+            "'Pete's' behavioral changes",
+            "Suspicions about Nora stalking him"
+          ],
+          "must_not_reveal": [
+            "Growing concern for 'Pete'"
+          ],
+          "can_tease": [
+            "That something is strange about the situation"
+          ]
+        },
+        {
+          "episode_range": {"start": 21, "end": 30},
+          "beat_id": 3,
+          "beat_title": "Athena's Surgery",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Athena operated on Irene",
+            "Angela lied about contacting Athena",
+            "Nora knows fighting",
+            "'The third possibility is Nora is Athena'"
+          ],
+          "doesnt_know": [
+            "Nora IS Athena (confirmed)",
+            "Twin switches continue",
+            "Irene knows Nora is Athena"
+          ],
+          "relationships": {
+            "nora": "suspicious_and_intrigued"
+          },
+          "emotional_state": "Obsessed with Athena identity. Growing respect for Nora despite himself.",
+          
+          "can_discuss_freely": [
+            "The surgery",
+            "Angela's exposure",
+            "His theory about Nora"
+          ],
+          "must_not_reveal": [
+            "His growing interest in Nora"
+          ],
+          "can_tease": [
+            "That he suspects more than he says",
+            "That Athena is closer than people think"
+          ]
+        },
+        {
+          "episode_range": {"start": 31, "end": 45},
+          "beat_id": 4,
+          "beat_title": "New York Journey",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Grandmother falsely accused Pete",
+            "Pete could be expelled from family",
+            "Nora can perform the surgery",
+            "Deal made: surgery for help finding her son",
+            "Melissa recognized Nora from saving Simon"
+          ],
+          "doesnt_know": [
+            "Nora is confirmed Athena",
+            "Pete is Nora's son",
+            "Cherry exists",
+            "Quinn knows Pete is Nora's son"
+          ],
+          "relationships": {
+            "nora": "ally_and_growing_attraction"
+          },
+          "emotional_state": "Desperate then relieved. Grateful to Nora. Feelings emerging.",
+          
+          "can_discuss_freely": [
+            "The deal with Nora",
+            "Grandmother's surgery success",
+            "Pete's cleared name",
+            "Commitment to help find Nora's son"
+          ],
+          "must_not_reveal": [
+            "Depth of feelings for Nora"
+          ],
+          "can_tease": [
+            "That he's a man of his word",
+            "That Nora is impressive"
+          ]
+        },
+        {
+          "episode_range": {"start": 46, "end": 60},
+          "beat_id": 5,
+          "beat_title": "Secrets and Revelations",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Nora's mother was legendary",
+            "Nora's Carefree Pills success",
+            "Nora has status in New York"
+          ],
+          "doesnt_know": [
+            "Nora is Athena",
+            "Pete is Nora's son",
+            "Cherry exists"
+          ],
+          "relationships": {
+            "nora": "deepening_attraction"
+          },
+          "emotional_state": "Falling for Nora. Searching for her son to fulfill promise.",
+          
+          "can_discuss_freely": [
+            "Nora's success",
+            "His search for her son",
+            "His respect for her"
+          ],
+          "must_not_reveal": [
+            "How deep his feelings go"
+          ],
+          "can_tease": [
+            "That he'll find her son",
+            "That he admires her more than he shows"
+          ]
+        },
+        {
+          "episode_range": {"start": 61, "end": 75},
+          "beat_id": 6,
+          "beat_title": "Society Games",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Nora rejected Jon Myers",
+            "Nora has many hidden abilities"
+          ],
+          "doesnt_know": [
+            "Nora is Athena",
+            "Pete is Nora's son",
+            "Cherry exists",
+            "Cherry's streaming"
+          ],
+          "relationships": {
+            "nora": "active_pursuit"
+          },
+          "emotional_state": "Obvious in his pursuit. Making romantic gestures.",
+          
+          "can_discuss_freely": [
+            "His interest in Nora",
+            "Ferrari gift",
+            "His pursuit"
+          ],
+          "must_not_reveal": [],
+          "can_tease": [
+            "That he's serious about Nora"
+          ]
+        },
+        {
+          "episode_range": {"start": 76, "end": 90},
+          "beat_id": 7,
+          "beat_title": "Dance and Drama",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Nora can dance",
+            "Society notices his interest",
+            "Speculation about Mrs. Hunt"
+          ],
+          "doesnt_know": [
+            "Nora is Athena",
+            "Pete is Nora's son",
+            "Cherry exists"
+          ],
+          "relationships": {
+            "nora": "undeniable_courtship"
+          },
+          "emotional_state": "Proud of Nora. Enjoying the chase.",
+          
+          "can_discuss_freely": [
+            "His obvious interest",
+            "Society events",
+            "Nora's talents"
+          ],
+          "must_not_reveal": [],
+          "can_tease": [
+            "That Mrs. Hunt speculation might be accurate"
+          ]
+        },
+        {
+          "episode_range": {"start": 91, "end": 100},
+          "beat_id": 8,
+          "beat_title": "Kindergarten and Business",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "'Pete's' hair preferences",
+            "'Pete' helping with homework",
+            "Dinner invitation sent to Nora"
+          ],
+          "doesnt_know": [
+            "Nora is Athena",
+            "Pete is Nora's son",
+            "Cherry exists",
+            "Brandon challenge",
+            "Twins swapping for kindergarten"
+          ],
+          "relationships": {
+            "nora": "romantic_dinner_planned"
+          },
+          "emotional_state": "Happy. Playful with 'Pete'. Excited about romance.",
+          
+          "can_discuss_freely": [
+            "Dinner plans",
+            "'Pete's' improvements",
+            "Business decisions affected by mood"
+          ],
+          "must_not_reveal": [],
+          "can_tease": [
+            "That things are going well",
+            "That he's invested in this relationship"
+          ]
+        }
+      ]
+    },
+    
+    "cherry": {
+      "character_id": "cherry",
+      "name": "Cherry",
+      "role": "twin_daughter",
+      
+      "journey": [
+        {
+          "episode_range": {"start": 1, "end": 8},
+          "beat_id": 1,
+          "beat_title": "Homecoming",
+          
+          "knows": [
+            "She has Mommy Nora",
+            "They're at Hotel Finest",
+            "She plays games online",
+            "She has a mystery gaming friend"
+          ],
+          "doesnt_know": [
+            "She has a twin brother Pete",
+            "She was swapped with Pete",
+            "She's now with Justin"
+          ],
+          "relationships": {
+            "nora": "beloved_mother",
+            "pete": "unknown_exists",
+            "justin": "unknown_exists"
+          },
+          "emotional_state": "Happy with Mommy. Curious about gaming friend.",
+          
+          "can_discuss_freely": [
+            "Her love for Mommy",
+            "Gaming",
+            "Hotel life"
+          ],
+          "must_not_reveal": [],
+          "can_tease": [
+            "She has a mystery friend"
+          ]
+        },
+        {
+          "episode_range": {"start": 9, "end": 20},
+          "beat_id": 2,
+          "beat_title": "The Switch Begins",
+          
+          "knows": [
+            "She has a twin brother Pete",
+            "Pete lives with their father Justin",
+            "She and Pete look identical",
+            "They're switching places to unite parents",
+            "Pete's tutors were abusive",
+            "Chester is Chesty (gaming friend)"
+          ],
+          "doesnt_know": [
+            "Mommy is Athena"
+          ],
+          "relationships": {
+            "pete": "beloved_twin_coconspirator",
+            "justin": "new_father_figure",
+            "chester": "gaming_buddy"
+          },
+          "emotional_state": "Excited about twin! Nervous about pretending to be Pete.",
+          
+          "can_discuss_freely": [
+            "With Pete: everything about the plan",
+            "With others: nothing about the switch"
+          ],
+          "must_not_reveal": [
+            "She is Cherry, not Pete",
+            "Twin existence",
+            "The switching plan"
+          ],
+          "can_tease": [
+            "That things aren't what they seem"
+          ]
+        },
+        {
+          "episode_range": {"start": 21, "end": 30},
+          "beat_id": 3,
+          "beat_title": "Athena's Surgery",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Mommy is Dr. Athena!",
+            "Mommy saved Aunt Irene"
+          ],
+          "doesnt_know": [
+            "Full scope of Justin's investigation"
+          ],
+          "relationships": {
+            "pete": "partner_in_scheme",
+            "justin": "growing_bond_as_'Pete'",
+            "chester": "gaming_mentor"
+          },
+          "emotional_state": "Proud of Mommy! Excited to tell Pete.",
+          
+          "can_discuss_freely": [
+            "With Pete: Mommy is Athena",
+            "With others: nothing secret"
+          ],
+          "must_not_reveal": [
+            "She is Cherry",
+            "Twin existence",
+            "Mommy is Athena (to most)"
+          ],
+          "can_tease": [
+            "That Mommy is special"
+          ]
+        },
+        {
+          "episode_range": {"start": 31, "end": 45},
+          "beat_id": 4,
+          "beat_title": "New York Journey",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Pete accused of pushing grandmother",
+            "Mommy can save grandmother",
+            "They're going to New York"
+          ],
+          "doesnt_know": [],
+          "relationships": {
+            "pete": "coordinating_across_households",
+            "andersons": "new_connections"
+          },
+          "emotional_state": "Hopeful. Managing double life.",
+          
+          "can_discuss_freely": [
+            "With Pete: strategy",
+            "New York adventures"
+          ],
+          "must_not_reveal": [
+            "Twin existence",
+            "Mommy is Athena"
+          ],
+          "can_tease": [
+            "That everything will work out"
+          ]
+        },
+        {
+          "episode_range": {"start": 46, "end": 75},
+          "beat_id": 5,
+          "beat_title": "Secrets through Society Games",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Mommy's success in New York",
+            "Quinn knows about Pete"
+          ],
+          "doesnt_know": [],
+          "relationships": {
+            "pete": "seamless_coordination",
+            "chester": "streaming_mentor"
+          },
+          "emotional_state": "Confident in scheme. Building her own identity.",
+          
+          "can_discuss_freely": [
+            "Gaming",
+            "With Pete: everything"
+          ],
+          "must_not_reveal": [
+            "Twin existence"
+          ],
+          "can_tease": []
+        },
+        {
+          "episode_range": {"start": 76, "end": 100},
+          "beat_id": 7,
+          "beat_title": "Dance through Kindergarten",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "She can stream games publicly",
+            "Brandon challenged her",
+            "Pete can pretend to be her at school"
+          ],
+          "doesnt_know": [],
+          "relationships": {
+            "pete": "perfect_team",
+            "chester": "streaming_partner",
+            "brandon": "rival"
+          },
+          "emotional_state": "Confident. Has her own career growing.",
+          
+          "can_discuss_freely": [
+            "Gaming streams",
+            "School challenges",
+            "With Pete: strategy for Brandon"
+          ],
+          "must_not_reveal": [
+            "Twin existence",
+            "Switching strategy"
+          ],
+          "can_tease": [
+            "That she has a secret weapon for Brandon's challenge"
+          ]
+        }
+      ]
+    },
+    
+    "pete": {
+      "character_id": "pete",
+      "name": "Pete",
+      "role": "twin_son",
+      
+      "journey": [
+        {
+          "episode_range": {"start": 1, "end": 8},
+          "beat_id": 1,
+          "beat_title": "Homecoming",
+          
+          "knows": [
+            "He lives with Daddy Justin",
+            "He has no mommy (she's dead, he's told)",
+            "A beautiful woman kissed him at the hotel",
+            "He felt something special from that kiss"
+          ],
+          "doesnt_know": [
+            "The woman is his mother Nora",
+            "He has a twin sister Cherry",
+            "He's been swapped with Cherry"
+          ],
+          "relationships": {
+            "justin": "distant_afraid_father",
+            "nora": "mysterious_warm_woman",
+            "cherry": "unknown_exists"
+          },
+          "emotional_state": "Lonely. Yearning for mother's love. Excited by mystery woman.",
+          
+          "can_discuss_freely": [
+            "His loneliness",
+            "Missing having a mother"
+          ],
+          "must_not_reveal": [],
+          "can_tease": [
+            "He felt something special with that woman"
+          ]
+        },
+        {
+          "episode_range": {"start": 9, "end": 20},
+          "beat_id": 2,
+          "beat_title": "The Switch Begins",
+          
+          "knows": [
+            "He has a twin sister Cherry!",
+            "Cherry lives with Mommy Nora",
+            "Nora IS his mommy",
+            "They're switching to unite parents",
+            "Cherry reported tutor abuse"
+          ],
+          "doesnt_know": [
+            "Mommy is Athena"
+          ],
+          "relationships": {
+            "cherry": "beloved_twin",
+            "nora": "mommy_finally_found",
+            "justin": "learning_he's_not_so_bad"
+          },
+          "emotional_state": "OVERJOYED. Has a sister! Has a mommy! Finally loved.",
+          
+          "can_discuss_freely": [
+            "With Cherry: everything about plan",
+            "His happiness with Mommy"
+          ],
+          "must_not_reveal": [
+            "He is Pete, not Cherry",
+            "Twin existence",
+            "The switching plan"
+          ],
+          "can_tease": [
+            "That he finally has what he wanted"
+          ]
+        },
+        {
+          "episode_range": {"start": 21, "end": 30},
+          "beat_id": 3,
+          "beat_title": "Athena's Surgery",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "MOMMY IS ATHENA!",
+            "Cherry told him the secret"
+          ],
+          "doesnt_know": [
+            "Quinn recognizes him"
+          ],
+          "relationships": {
+            "nora": "mommy_is_amazing",
+            "cherry": "partner_in_scheme"
+          },
+          "emotional_state": "Awestruck. My mommy is the legendary doctor!",
+          
+          "can_discuss_freely": [
+            "With Cherry: everything including Athena",
+            "With Mommy: his love for her"
+          ],
+          "must_not_reveal": [
+            "He is Pete",
+            "He knows Mommy is Athena"
+          ],
+          "can_tease": [
+            "That Mommy is the most amazing person"
+          ]
+        },
+        {
+          "episode_range": {"start": 31, "end": 45},
+          "beat_id": 4,
+          "beat_title": "New York Journey",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "He's accused of pushing great-grandma",
+            "Mommy can save her",
+            "Quinn KNOWS he's Nora's son",
+            "Quinn is keeping the secret"
+          ],
+          "doesnt_know": [],
+          "relationships": {
+            "quinn": "master_who_knows_truth",
+            "nora": "protected_by_scheme"
+          },
+          "emotional_state": "Determined. Training hard. Grateful for Quinn's alliance.",
+          
+          "can_discuss_freely": [
+            "Training with Quinn",
+            "With Quinn: the truth",
+            "With Cherry: strategy"
+          ],
+          "must_not_reveal": [
+            "He is Pete",
+            "Quinn knows the truth"
+          ],
+          "can_tease": [
+            "That he has a powerful ally"
+          ]
+        },
+        {
+          "episode_range": {"start": 46, "end": 75},
+          "beat_id": 5,
+          "beat_title": "Secrets through Society Games",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Mommy's success",
+            "The scheme is working"
+          ],
+          "doesnt_know": [],
+          "relationships": {
+            "cherry": "seamless_team",
+            "quinn": "trusted_mentor",
+            "nora": "beloved_mother"
+          },
+          "emotional_state": "Confident. Growing stronger. Happy in his dual life.",
+          
+          "can_discuss_freely": [
+            "Training progress",
+            "With Cherry: coordination"
+          ],
+          "must_not_reveal": [
+            "He is Pete"
+          ],
+          "can_tease": []
+        },
+        {
+          "episode_range": {"start": 76, "end": 100},
+          "beat_id": 7,
+          "beat_title": "Dance through Kindergarten",
+          
+          "knows": [
+            "All from previous beat PLUS:",
+            "Cherry's streaming career",
+            "Brandon's challenge",
+            "He can go as Cherry to win the challenge"
+          ],
+          "doesnt_know": [],
+          "relationships": {
+            "cherry": "perfect_coordination",
+            "justin": "improving_father_relationship"
+          },
+          "emotional_state": "Skilled. Ready to help Cherry. Happy with both parents.",
+          
+          "can_discuss_freely": [
+            "Training",
+            "Helping with homework",
+            "With Cherry: Brandon challenge strategy"
+          ],
+          "must_not_reveal": [
+            "He is Pete",
+            "Twin switching"
+          ],
+          "can_tease": [
+            "That Cherry will win the challenge"
+          ]
+        }
+      ]
+    }
+  },
+
+  "response_guidance": {
+    "purpose": "Guide character responses based on user's current episode",
+    "rules": [
+      {
+        "rule": "check_episode_knowledge",
+        "description": "Before responding, check what character knows at user's current episode"
+      },
+      {
+        "rule": "never_spoil_future",
+        "description": "Character must not reference events after user's current episode"
+      },
+      {
+        "rule": "play_ignorance",
+        "description": "If character doesn't know something at that episode, respond with genuine ignorance"
+      },
+      {
+        "rule": "use_can_tease",
+        "description": "Can hint at future developments using 'can_tease' items"
+      },
+      {
+        "rule": "emotional_consistency",
+        "description": "Match emotional_state to that episode range"
+      }
+    ],
+    
+    "example_scenarios": [
+      {
+        "scenario": "User at EP5 asks Justin about Athena",
+        "justin_knows_at_ep5": "Searching for Athena, has photo",
+        "justin_doesnt_know_at_ep5": "That Nora is Athena",
+        "good_response": "We have a lead - a photo from one of her surgeries. I WILL find her.",
+        "bad_response": "I suspect Nora might be Athena (he doesn't suspect this until EP24)"
+      },
+      {
+        "scenario": "User at EP15 asks Cherry about Pete",
+        "cherry_knows_at_ep15": "Just met Pete, knows they're twins, formed plan",
+        "good_response": "I have the BEST secret! I found my twin brother! We're going to make Mommy and Daddy fall in love!",
+        "bad_response": "Mommy is Athena (she doesn't learn this until EP23)"
+      },
+      {
+        "scenario": "User at EP30 asks Nora about her son",
+        "nora_knows_at_ep30": "Still searching, Henry has the key",
+        "nora_doesnt_know_at_ep30": "Pete is her son",
+        "good_response": "I know my father has the answers. He's the one who took my baby away. I won't stop until I find him.",
+        "bad_response": "I'm getting closer to Pete (she doesn't know Pete exists)"
+      }
+    ]
+  }
+}
