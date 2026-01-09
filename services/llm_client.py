@@ -16,6 +16,9 @@ from vertexai.generative_models import (
     SafetySetting,
 )
 
+# Import credentials from creds.py
+from creds import get_gcp_creds
+
 
 class GeminiModels:
     """Gemini model identifiers"""
@@ -45,21 +48,16 @@ class GeminiLLMClient:
             return
         
         try:
-            # Import GCP credentials from image generator
-            from services.image_generator import GCP_CREDS
+            # Get GCP credentials from creds.py
+            gcp_creds = get_gcp_creds()
             
-            if not GCP_CREDS:
+            if not gcp_creds:
                 print(f"[LLM_CLIENT] ⚠️ No GCP credentials found")
                 return
             
             # Clean existing credentials
             if "GOOGLE_APPLICATION_CREDENTIALS" in os.environ:
                 del os.environ["GOOGLE_APPLICATION_CREDENTIALS"]
-            
-            # Prepare credentials
-            gcp_creds = GCP_CREDS.copy()
-            if "private_key" in gcp_creds:
-                gcp_creds["private_key"] = gcp_creds["private_key"].replace("\\n", "\n")
             
             # Create temporary file for credentials
             with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".json") as temp_key_file:

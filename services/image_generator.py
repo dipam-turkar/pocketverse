@@ -8,7 +8,9 @@ from typing import Optional, Dict, Any
 import vertexai
 from vertexai.preview.vision_models import ImageGenerationModel
 
-GCP_CREDS = {}
+# Import credentials from creds.py
+from creds import get_gcp_creds
+GCP_CREDS = get_gcp_creds()
 class ImageGenerator:
     """Service for generating images using Google Imagen 3 via Vertex AI"""
     
@@ -39,12 +41,8 @@ class ImageGenerator:
             print("[IMG_GEN] Cleaned existing GOOGLE_APPLICATION_CREDENTIALS path.")
         
         try:
-            # Parse the credentials
-            # gcp_creds = json.loads(gcp_creds_raw) if isinstance(gcp_creds_raw, str) else gcp_creds_raw
+            # Get credentials from creds.py (already has newlines fixed)
             gcp_creds = GCP_CREDS
-            # Repair the private key
-            if "private_key" in gcp_creds:
-                gcp_creds["private_key"] = gcp_creds["private_key"].replace("\\n", "\n")
             
             # ✅ FIX: Use google.oauth2.service_account.Credentials instead
             scoped_credentials = service_account.Credentials.from_service_account_info(

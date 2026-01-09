@@ -603,21 +603,73 @@ def create_comment(post_id):
     db.session.add(comment)
     db.session.commit()
     
-    # Trigger automatic comment generation from official characters
+    # Trigger automatic character reply using new Character Chatbot
+    character_reply = None
     try:
-        import os
-        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        canon_directory = os.path.join(project_root, 'PromoCanon_Show_33adb096b04ecd6b23ce9341160b199f2d489311_1_100')
-        
-        from services.comment_generator import CommentGenerator
-        comment_generator = CommentGenerator(canon_directory=canon_directory)
-        comment_generator.generate_comments_for_post(post, trigger_type="user_commented", user_comment=comment)
+        # Only generate reply if post has an official character author
+        if post.author_user and post.author_user.is_official:
+            from services.character_chatbot import CharacterChatbot
+            
+            chatbot = CharacterChatbot(context_dir="context")
+            
+            # Get commenter's episode progress
+            commenter = User.query.get(author_id) if author_id else None
+            show_name = post.show_name or "saving_nora"
+            user_episode = 1
+            
+            if commenter:
+                watched_shows = commenter.get_watched_shows()
+                user_episode = watched_shows.get(show_name, 1)
+            
+            # Get post's episode tag
+            post_episode = post.episode_tag or user_episode
+            
+            # Get character info
+            char_data = post.author_user.get_character_data()
+            character_id = None
+            if char_data:
+                character_id = char_data.get("character_name", "").lower().replace(" ", "_")
+            if not character_id:
+                character_id = post.author_user.display_name.lower().replace(" ", "_")
+            
+            print(f"[API] Generating character reply: {character_id} for user at EP{user_episode}")
+            
+            # Generate reply
+            reply_content = chatbot.generate_reply(
+                character_id=character_id,
+                user_episode=user_episode,
+                post_episode=post_episode,
+                post_content=f"{post.title}\n{post.content or ''}",
+                user_comment=content,
+                show_id=show_name.lower().replace(" ", "_"),
+                template_version="v1"  # Can be made configurable
+            )
+            
+            if reply_content:
+                # Create the character's reply comment
+                character_reply = Comment(
+                    content=reply_content,
+                    post_id=post_id,
+                    author_id=post.author_user.id,
+                    parent_id=comment.id  # Reply to user's comment
+                )
+                db.session.add(character_reply)
+                db.session.commit()
+                print(f"[API] ✅ Created character reply from {post.author_user.display_name}")
+        else:
+            print(f"[API] ℹ️ Post author is not an official character, skipping auto-reply")
+            
     except Exception as e:
-        print(f"[API] ⚠️ Error generating automatic comments: {e}")
+        print(f"[API] ⚠️ Error generating character reply: {e}")
         import traceback
         traceback.print_exc()
     
-    return jsonify(comment.to_dict()), 201
+    # Return both the user's comment and the character's reply if any
+    response_data = comment.to_dict()
+    if character_reply:
+        response_data['character_reply'] = character_reply.to_dict()
+    
+    return jsonify(response_data), 201
 
 
 @api_bp.route('/posts/<int:post_id>/comments', methods=['GET'])
@@ -729,5 +781,200 @@ def get_comment_votes(comment_id):
         'comment_id': comment_id,
         'vote_score': comment.get_vote_score(),
         'votes': [v.to_dict() for v in votes]
+    }), 200
+
+
+# ==================== CHARACTER CHATBOT TEST ENDPOINTS ====================
+
+@api_bp.route('/chatbot/test', methods=['POST'])
+def test_character_chatbot():
+    """
+    API endpoint to test the character chatbot.
+    
+    Request body:
+    {
+        "character_id": "nora_smith",
+        "user_episode": 25,
+        "post_episode": 23,
+        "post_content": "Angela got what she deserved",
+        "user_comment": "Do you think Justin knows you're Athena?",
+        "template_version": "v1"  // optional: "v1", "v2", or "v3"
+    }
+    
+    Returns:
+    {
+        "success": true,
+        "character_id": "nora_smith",
+        "user_episode": 25,
+        "template_version": "v1",
+        "prompt_length": 5000,
+        "response": "Why would he? I'm just someone who wants to sleep...",
+        "debug": {...}
+    }
+    """
+    data = request.get_json()
+    
+    if not data:
+        return jsonify({'error': 'Request body is required'}), 400
+    
+    # Required fields
+    character_id = data.get('character_id')
+    user_episode = data.get('user_episode')
+    user_comment = data.get('user_comment')
+    
+    if not character_id:
+        return jsonify({'error': 'character_id is required'}), 400
+    if not user_episode:
+        return jsonify({'error': 'user_episode is required'}), 400
+    if not user_comment:
+        return jsonify({'error': 'user_comment is required'}), 400
+    
+    # Optional fields with defaults
+    post_episode = data.get('post_episode', user_episode)
+    post_content = data.get('post_content', '')
+    template_version = data.get('template_version', 'v1')
+    show_id = data.get('show_id', 'saving_nora')
+    include_prompt = data.get('include_prompt', False)
+    
+    try:
+        from services.character_chatbot import CharacterChatbot
+        
+        chatbot = CharacterChatbot(context_dir="context")
+        
+        # Generate with debug info
+        result = chatbot.test_generation(
+            character_id=character_id,
+            user_episode=int(user_episode),
+            post_episode=int(post_episode),
+            post_content=post_content,
+            user_comment=user_comment,
+            template_version=template_version
+        )
+        
+        response_data = {
+            'success': True,
+            'character_id': character_id,
+            'user_episode': user_episode,
+            'post_episode': post_episode,
+            'template_version': template_version,
+            'prompt_length': result.get('prompt_length', 0),
+            'response': result.get('response'),
+            'current_beat': result.get('current_beat', {}),
+            'emotional_state': result.get('character_emotional_state', '')
+        }
+        
+        # Include full prompt if requested
+        if include_prompt:
+            response_data['full_prompt'] = result.get('full_prompt', '')
+        
+        return jsonify(response_data), 200
+        
+    except Exception as e:
+        print(f"[API] Error testing chatbot: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+
+@api_bp.route('/chatbot/context', methods=['POST'])
+def get_chatbot_context():
+    """
+    API endpoint to get story context without generating a reply.
+    Useful for debugging and understanding what context the chatbot uses.
+    
+    Request body:
+    {
+        "character_id": "nora_smith",
+        "user_episode": 25,
+        "post_episode": 23,
+        "show_id": "saving_nora"  // optional
+    }
+    
+    Returns the complete context that would be used for generation.
+    """
+    data = request.get_json()
+    
+    if not data:
+        return jsonify({'error': 'Request body is required'}), 400
+    
+    character_id = data.get('character_id')
+    user_episode = data.get('user_episode')
+    
+    if not character_id:
+        return jsonify({'error': 'character_id is required'}), 400
+    if not user_episode:
+        return jsonify({'error': 'user_episode is required'}), 400
+    
+    post_episode = data.get('post_episode', user_episode)
+    show_id = data.get('show_id', 'saving_nora')
+    
+    try:
+        from services.story_context import StoryContextService
+        
+        service = StoryContextService(context_dir="context")
+        context = service.build_complete_context(
+            character_id=character_id,
+            user_episode=int(user_episode),
+            post_episode=int(post_episode),
+            show_id=show_id
+        )
+        
+        # Return a summarized version (full context can be very large)
+        return jsonify({
+            'success': True,
+            'character_id': character_id,
+            'user_episode': user_episode,
+            'post_episode': post_episode,
+            'show_id': show_id,
+            'current_beat': context.get('current_beat', {}),
+            'character_knowledge': context.get('character_knowledge', {}),
+            'previous_plots_count': len(context.get('previous_plots', [])),
+            'spoiler_rules': context.get('spoiler_rules', {}),
+            
+            # Formatted versions for prompt
+            'persona_formatted': context.get('persona_formatted', ''),
+            'voice_rules': context.get('voice_rules', {}),
+            'previous_plots_formatted': context.get('previous_plots_formatted', ''),
+            'episode_progression_formatted': context.get('episode_progression_formatted', ''),
+            'spoiler_rules_formatted': context.get('spoiler_rules_formatted', ''),
+            'character_knowledge_formatted': context.get('character_knowledge_formatted', '')
+        }), 200
+        
+    except Exception as e:
+        print(f"[API] Error getting context: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+
+@api_bp.route('/chatbot/templates', methods=['GET'])
+def list_prompt_templates():
+    """
+    API endpoint to list available prompt templates.
+    
+    Returns:
+    {
+        "templates": ["v1", "v2", "v3"],
+        "descriptions": {
+            "v1": "Full context - detailed prompt with all sections",
+            "v2": "Concise - shorter prompt with essential context",
+            "v3": "Minimal - very short prompt for testing"
+        }
+    }
+    """
+    return jsonify({
+        'templates': ['v1', 'v2', 'v3'],
+        'descriptions': {
+            'v1': 'Full context - detailed prompt with all sections (persona, previous plots, episode progression, spoiler rules, character knowledge)',
+            'v2': 'Concise - shorter prompt with essential context only',
+            'v3': 'Minimal - very short prompt for quick testing'
+        },
+        'default': 'v1'
     }), 200
 
