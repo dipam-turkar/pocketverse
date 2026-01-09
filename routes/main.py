@@ -132,21 +132,71 @@ def add_comment(post_id):
     db.session.add(comment)
     db.session.commit()
     
-    # Trigger automatic comment generation from official characters
+    # Trigger automatic character reply using Character Chatbot
     try:
-        import os
-        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        canon_directory = os.path.join(project_root, 'PromoCanon_Show_33adb096b04ecd6b23ce9341160b199f2d489311_1_100')
-        
-        from services.comment_generator import CommentGenerator
-        comment_generator = CommentGenerator(canon_directory=canon_directory)
-        comment_generator.generate_comments_for_post(post, trigger_type="user_commented", user_comment=comment)
+        # Only generate reply if post has an official character author
+        if post.author_user and post.author_user.is_official:
+            from services.character_chatbot import CharacterChatbot
+            
+            chatbot = CharacterChatbot(context_dir="context")
+            
+            # Get commenter's episode progress
+            commenter = User.query.get(author_id) if author_id else None
+            show_name = post.show_name or "saving_nora"
+            user_episode = 1
+            
+            if commenter:
+                watched_shows = commenter.get_watched_shows()
+                user_episode = watched_shows.get(show_name, 1)
+            
+            # Get post's episode tag
+            post_episode = post.episode_tag or user_episode
+            
+            # Get character info
+            char_data = post.author_user.get_character_data()
+            character_id = None
+            if char_data:
+                character_id = char_data.get("character_name", "").lower().replace(" ", "_")
+            if not character_id:
+                character_id = post.author_user.display_name.lower().replace(" ", "_")
+            
+            print(f"[MAIN] Generating character reply: {character_id} for user at EP{user_episode}")
+            
+            # Generate reply
+            reply_content = chatbot.generate_reply(
+                character_id=character_id,
+                user_episode=user_episode,
+                post_episode=post_episode,
+                post_content=f"{post.title}\n{post.content or ''}",
+                user_comment=content,
+                show_id=show_name.lower().replace(" ", "_"),
+                template_version="v1"
+            )
+            
+            if reply_content:
+                # Create the character's reply comment
+                character_reply = Comment(
+                    content=reply_content,
+                    post_id=post_id,
+                    author_id=post.author_user.id,
+                    parent_id=comment.id  # Reply to user's comment
+                )
+                db.session.add(character_reply)
+                db.session.commit()
+                print(f"[MAIN] ✅ Created character reply from {post.author_user.display_name}")
+                flash('Comment added and character replied!', 'success')
+            else:
+                flash('Comment added successfully!', 'success')
+        else:
+            print(f"[MAIN] ℹ️ Post author is not an official character, skipping auto-reply")
+            flash('Comment added successfully!', 'success')
+            
     except Exception as e:
-        print(f"[MAIN] ⚠️ Error generating automatic comments: {e}")
+        print(f"[MAIN] ⚠️ Error generating character reply: {e}")
         import traceback
         traceback.print_exc()
+        flash('Comment added successfully!', 'success')
     
-    flash('Comment added successfully!', 'success')
     return redirect(url_for('main.view_post', post_id=post_id))
 
 
